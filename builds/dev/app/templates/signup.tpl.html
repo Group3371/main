@@ -1,0 +1,47 @@
+<form  method="POST" class="form" name="createUser" novalidate ng-submit="hc.registration()">
+    <div class="form-container">
+        <div class="form__head clearfix">
+            <div class="left form__head-header">Registration</div>
+            <div class=" right form__head-redirect">
+                <a ng-click="open('auth')" class="sign-up"> Sign In</a>
+            </div>
+        </div>
+        <div class="form__socials clearfix">
+            <a class="social_fb" ng-click="hc.facebookSignUp()">Log in Fasebook</a>
+            <a class="social_vk">Log in Vkontakte</a>
+        </div>
+        <div class="separator">or</div>
+        <div class="form-input-field clearfix">
+            <div class="input-container">
+                <input class="input input-email"
+                       type="email"
+                       name="email"
+                       ng-model="hc.user.email"
+                       placeholder="Email"
+                       ng-class="{'error':createUser.email.$invalid && createUser.$dirty}"
+                       required>
+            </div>
+            <div class="input-container">
+                <input class="input input-pass"
+                       type="password"
+                       name="password"
+                       ng-model="hc.user.password"
+                       placeholder="Password"
+                       min="1"
+                       max="12"
+                       required>
+            </div>
+            <div class="input-container">
+                <input class="input input-fullname"
+                       type="text"
+                       name="fullName"
+                       ng-model="hc.user.fullName"
+                       placeholder="Full name"
+                       required>
+            </div>
+            <button type="submit"
+                    ng-disabled="createUser.$invalid"
+                    class="input submit">Sign Up with email</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,9 @@
+{
+  "firebase": "fittrecker",
+  "public": "builds/dev",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

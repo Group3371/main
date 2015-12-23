@@ -1,0 +1,47 @@
+.number-picker {
+  display: inline-block;
+  .form-picker {
+    display: inline-block;
+  }
+  &__field {
+    background: transparent;
+    font-size: 24px;
+    margin: 3px 7px 3px 0;
+    float: left;
+    width: 50px;
+    height: 34px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    border: 1px solid rgba(129,126,126,.18);
+    text-align: center;
+    line-height: 30px;
+    
+  }
+  .number-picker__group {
+    float: right;
+    overflow: hidden;
+  }
+
+  .button-picker {
+    line-height: normal;
+    &__tungle {
+      cursor: pointer;
+      display: inline-block;
+      width: 13px;
+      height: 8px;
+    }
+    .top-tungle {
+      background: url("app/img/directives/tungle-poz-up.png") 100% 100% no-repeat;
+      &:hover {
+        background: url("app/img/directives/tungle-active-up.png") 100% 100% no-repeat;
+      }
+    }
+    .bottom-tungle {
+      background: url("app/img/directives/tungle-poz-down.png") 100% 100% no-repeat;
+      &:hover {
+        background: url("app/img/directives/tungle-active-down.png") 100% 100% no-repeat;
+      }
+    }
+  }
+}

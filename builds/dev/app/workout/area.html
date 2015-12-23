@@ -1,0 +1,55 @@
+<div class="workout-container app-container">
+    <div class="main-content">
+        <div class="area__header header">
+            {{ac.complexe.name}}
+        </div>
+        <div class="column area-left">
+            <div class="section approach">
+                <div class="approach__header area__header">Подходы</div>
+                <span class="approach__value value">{{ac.exercise.approach}}</span>
+            </div>
+            <div class="section score">
+                <div class="score__header area__header">Количество раз</div>
+                <span class="score__value value">{{ac.exercise.step}}</span>
+            </div>
+            <div class="section time">
+                <div class="time__header area__header">Время одного подхода</div>
+                <span class="time__value value">{{ac.exercise.timeStep | TimeFilter}}</span>
+            </div>
+        </div>
+        <div class="column area-center">
+            <div class="area-field">
+                <div class="exercise-rest" ng-class="{showIf: ac.startRest}" ng-show="ac.startRest">
+                    <div class="exercise-rest__body">
+                        <div class="exercise-rest__header">Отдых</div>
+                        <div class="exercise-rest__value">{{ac.exercise.quantity | TimeFilter}}</div>
+                    </div>
+                </div>
+                <div class="complex-end" ng-class="{showIf: ac.endComplex}" ng-show="ac.endComplex">
+                <!--<div class="complex-end">-->
+                    <div class="complex-end__body" >
+                        <div class="complexe-end__header">Поздаравляем! Комплекс Упражнений успешно завершен.</div>
+                        <div class="complex__group-button">
+                            <div class="go-back button"><a ui-sref="workout">Вернуться на страницу Комплексов</a></div>
+                            <div class="button restart" ng-click="ac.restartComplex()">Повторить комплекс</div>
+                        </div>
+                    </div>
+                </div>
+                <youtube-video video-id="ac.complexe.exercises[ac.numberExercise].video"
+                               player="exercisePlayer"
+                               player-width="'100%'"
+                               player-height="'415px'"></youtube-video>
+                <!--<pre>{{ac.complexe.exercises[ac.numberExercise].quantity | json}}</pre>-->
+            </div>
+        </div>
+        <div class="column area-right">
+            <div class="section exercise-name">
+                <div class=" exercise__header area__header">{{ac.exercise.name}}</div>
+            </div>
+            <div class="section total-time">
+                <div class="total-time__header area__header">Общее время</div>
+                <span class="total-time__value value">{{ac.exercise.fullTime | TimeFilter}}</span>
+            </div>
+        </div>
+    </div>
+</div>p

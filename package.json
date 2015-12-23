@@ -1,0 +1,42 @@
+{
+  "name": "fittreker",
+  "version": "1.0.0",
+  "description": "This app help you to write your exersises",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isArlekin/FitnessTreker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/isArlekin/FitnessTreker/issues"
+  },
+  "homepage": "https://github.com/isArlekin/FitnessTreker#readme",
+  "devDependencies": {
+    "browser-sync": "^2.9.11",
+    "gulp": "^3.9.0",
+    "gulp-angular-templatecache": "^1.8.0",
+    "gulp-autoprefixer": "3.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-minify-css": "^1.2.1",
+    "gulp-ng-annotate": "^1.1.0",
+    "gulp-sass": "^2.1.0",
+    "gulp-uglify": "^1.4.2",
+    "jasmine": "^2.3.2",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.10",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-jasmine": "^0.3.6",
+    "karma-junit-reporter": "^0.3.4"
+  },
+  "dependencies": {
+    "angular-animate": "^1.4.7",
+    "browser-sync": "^2.10.0",
+    "lodash": "^3.10.1",
+    "underscore.string": "^3.2.2"
+  }
+}

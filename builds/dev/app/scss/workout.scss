@@ -1,0 +1,283 @@
+.app-container {
+  background: url("app/img/fon.png") repeat-y;
+  //height: 100%;
+  padding-top: 100px;
+}
+.main-field {
+    background-color: rgba(158,157,157,.41);
+    box-shadow: 0 0 5px rgba(0,0,0,.5);
+    margin-left: 320px;
+}
+.main-content  {
+  width: 1024px;
+  margin: 0 auto 0;
+}
+.information {
+  background-color: rgba(158,157,157,.41);
+  box-shadow: 0 0 5px rgba(0,0,0,.5);
+  float: left;
+  display: inline-block;
+  width: 280px;
+}
+.search {
+  padding-left: 10px;
+  display: block;
+  width: 100%;
+  height: 34px;
+  border-radius: 7px;
+  &__label {
+    font-size: 17px;
+    padding-top: 7px;
+    text-align: right;
+    float: left;
+    display: inline-block;
+    width: 140px;
+  }
+}
+.workout-container {
+  .workout__header {
+    width: 100%;
+    border-bottom: 2px solid #C6C4C4;
+    padding: 10px 20px 10px 20px;
+    .wrapper-search {
+      margin-left: 150px;
+    }
+    margin-bottom: 25px;
+  }
+  .complecses {
+    padding: 0 20px 20px;
+  }
+  .complecses-list__item {
+    cursor: pointer;
+    border-radius: 7px;
+    background-color: #4968a9;
+    position: relative;
+    width: 100%;
+    height: 200px;
+    margin-bottom: 25px;
+    &:hover {
+      -webkit-box-shadow: 0 0 7px rgba(196, 137, 191, 0.9);
+      -moz-box-shadow: 0 0 7px rgba(196, 137, 191, 0.9);
+      box-shadow: 0 0 7px rgba(196, 137, 191, 0.9);
+    }
+    // Animation fade and Animation show
+    &.ng-leave,
+    &.ng-enter,
+    &.ng-move {
+      -webkit-transition: all ease-in .4s;
+      -moz-transition: all ease-in .4s;
+      -ms-transition: all ease-in .4s;
+      -o-transition: all ease-in .4s;
+      transition: all ease-in .4s;
+    }
+    &.ng-enter,
+    &.ng-leave.ng-leave-active,
+    &.ng-move {
+      max-height: 200px;
+      top: -50px;
+      opacity: 0;
+    }
+    &.ng-leave,
+    &.ng-move.ng-move-active ,
+    &.ng-enter.ng-enter-active {
+      max-height: 275px;
+      top: 0;
+      opacity: 1;
+    }
+  }
+  .complecses-header {
+    padding: 10px 0 0 15px;
+    font-size: 24px;
+  }
+  .complecses-body {
+    text-align: right;
+  }
+  .description-list {
+    text-align: left;
+    display: inline-block;
+    padding-right: 40px;
+    .description-list__item {
+      font-size: 12px;
+      background: rgb(196, 137, 191);
+      padding: 2px 15px;
+      margin-bottom: 4px;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      border-radius: 8px;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+  .complexes-tools {
+    display: inline-block;
+    position: absolute;
+    top: 3px;
+    right: 0;
+    cursor: pointer;
+    .tool {
+      display: inline-block;
+      margin: 0 10px 0 0;
+      background-color: rgb(196, 137, 191);
+      height: 30px;
+      width: 30px;
+      &:hover {
+        transform: scale(1.05) rotate(5deg);
+      }
+    }
+    .tool__update {
+      background: url("app/img/icons/update.png");
+      background-position: 50% 50%;
+      background-size: 30px;
+    }
+    .tool__delete {
+      background: url("app/img/icons/delete.png");
+      background-position: 50% 50%;
+      background-size: 30px;
+    }
+  }
+
+  .complecses__time {
+    text-align: right;
+    margin:  10px 40px 0 0;
+  }
+
+}
+// Создание нового комплекса
+// Стили для модального окна
+.workout__tools {
+  text-align: right;
+  margin: 10px 20px 20px 0;
+  .tools__header {
+    font-size: 16px;
+    display: inline-block;
+    font-weight: bold;
+  }
+  .tools__button {
+    display: inline-block;
+    background-color: #9558A0;
+    -webkit-box-shadow: inset 0 -2px 0 #693a74;
+    -moz-box-shadow: inset 0 -2px 0 #693a74;
+    box-shadow: inset 0 -2px 0 #693a74;
+    color: #fff;
+    border: 0;
+    padding: 3px 7px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    &:hover {
+      transform: scale(1.015);
+    }
+    &:active {
+      outline: none;
+      transform: translate(1px, 1px) skew(1deg, 0deg);
+      box-shadow: inset 1px 2px 0 #693a74;
+    }
+  }
+
+}
+.exercises__left-column {
+  float: left;
+}
+.exercises__right-column {
+  float: right;
+}
+.exercises {
+  margin-bottom: 20px;
+  text-align: left;
+  .exercise-list__header {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .exercises-list {
+    height: 200px;
+    overflow: auto;
+    &__item {
+      -ms-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+      width: 170px;
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+      background-color: rgb(196, 137, 191);
+      padding: 4px 15px;
+      margin-bottom: 4px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    .add-ex, .del-ex {
+      position: absolute;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+      background-color: #8CB08C;
+      color: #4f8051;
+      font-weight: bold;
+      font-size: 20px;
+      display: inline-block;
+      padding: 0 7px;
+      margin-left: 10px;
+    }
+    .del-ex {
+      background-color: #F87272;
+      color: #663333;
+    }
+  }
+}
+//Аватарка пользователя
+.information__header {
+  padding: 20px 0;
+  margin-bottom: 15px;
+  text-align: center;
+  border-bottom: 2px solid #bababa;
+}
+.information__avatar {
+  display: inline-block;
+  border: 4px solid #bababa;
+  overflow: hidden;
+  border-radius: 4px;
+  &:hover {
+    -webkit-box-shadow: 0 0 7px rgba(196, 137, 191, 0.9);
+    -moz-box-shadow: 0 0 7px rgba(196, 137, 191, 0.9);
+    box-shadow: 0 0 7px rgba(196, 137, 191, 0.9);
+  }
+  .user-avatar {
+    width: 200px;
+    height: 200px;
+  }
+}
+.info-list {
+  padding: 0 0 20px 20px;
+  &__item {
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 5px;
+    &__item:last-child {
+      margin: 0;
+    }
+  }
+}
+.avatar-link {
+  display: block;
+  text-decoration: none;
+}
+.base-exercise {
+  background-color: #0079FF!important;
+  color: #fff!important;
+}
+
+// Preloader
+.preloader {
+  top: 0;
+  padding-top: -100px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: url('app/img/preloader/128x128/Preloader_3/Preloader_3.gif') no-repeat 50% 50% #fff;
+  background-color: #fff;
+}

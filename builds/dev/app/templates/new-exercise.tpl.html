@@ -1,0 +1,108 @@
+<form method="POST" name="newExercise" class="form form-newExerciese">
+    <div class="form__header">
+        Создайте свое собственное упражнение!
+    </div>
+    <div class="form-container">
+        <label for="name" class="form-label name-label">Название упражнения</label>
+        <input type="text"
+               ng-model="emc.exercise.name"
+               name="name"
+               id="name"
+               minlength="3"
+               maxlength="60"
+               ng-class="{error: newExercise.name.$invalid && newExercise.name.$dirty,
+                          success:  newExercise.name.$valid && newExercise.name.$dirty}"
+               required
+               placeholder="Название упражнения"
+               class="input exercise-name">
+    </div>
+    <div class="form-container form-picker">
+        <label class="form-label">Количество подходов</label>
+        <div class="exercise-approach input-field">
+            <number-picker maxlength="2" maxvalue="10" value="emc.approach"></number-picker>
+        </div>
+        <!--<input type="text"-->
+               <!--ng-model="emc.exercise.approach"-->
+               <!--name="approach"-->
+               <!--id="approach"-->
+               <!--placeholder="Сколько подходов?"-->
+               <!--class="input exercise-approach">-->
+    </div>
+    <div class="form-container">
+        <label class="form-label">Отдых</label>
+        <div class="exercise-quantity input-field time-picker">
+            <div class="time-picker__group time-picker__group-left">
+                <number-picker maxlength="2" maxvalue="59" minvalue="0" value="quantity.min"></number-picker>
+                <div class="time-picker__description time-picker__min"> мин. </div>
+            </div>
+            <div class="time-picker__group time-picker__group-right">
+                <number-picker maxlength="2" maxvalue="60" minvalue="0" value="quantity.sec" ></number-picker>
+                <div class="time-picker__description time-picker__sec"> с. </div>
+            </div>
+        </div>
+        <!--<input type="text"-->
+               <!--ng-model="emc.exercise.quantity"-->
+               <!--name="quantity"-->
+               <!--id="quantity"-->
+               <!--placeholder="Отдых между упражнениями"-->
+               <!--class="input exercise-quantity">-->
+    </div>
+    <div class="form-container">
+        <label class="form-label">Количество раз</label>
+        <div class="exercise-step input-field">
+            <number-picker maxlength="2" maxvalue="10" value="emc.step"></number-picker>
+        </div>
+        <!--<input type="text"-->
+               <!--ng-model="emc.exercise.step"-->
+               <!--name="step"-->
+               <!--id="step"-->
+               <!--placeholder="Количество раз"-->
+               <!--class="input exercise-step">-->
+    </div>
+    <div class="form-container">
+        <label class="form-label">Время подхода</label>
+        <div class="exercise-timeStep input-field time-picker">
+            <div class="time-picker__group time-picker__group-left">
+                <number-picker maxlength="2" maxvalue="59" minvalue="0" value="timeStep.min"></number-picker>
+                <div class="time-picker__description time-picker__min"> мин. </div>
+            </div>
+            <div class="time-picker__group time-picker__group-right">
+                <number-picker maxlength="2" maxvalue="60" minvalue="0" value="timeStep.sec" ></number-picker>
+                <div class="time-picker__description time-picker__sec"> с. </div>
+            </div>
+        </div>
+        <!--<input type="text"-->
+               <!--ng-model="emc.exercise.timeStep"-->
+               <!--name="timeStep"-->
+               <!--id="timeStep"-->
+               <!--class="input exercise-timeStep">-->
+    </div>
+    <div class="form-container">
+        <label for="video" class="form-label">Ссылка на видео</label>
+        <input type="text"
+               ng-model="emc.exercise.video"
+               name="video"
+               id="video"
+               placeholder="Ссылка с youtobe"
+               class="input exercise-video">
+    </div>
+    <!--<div class="form-container">-->
+        <!--<label for="src" class="form-label">Картинка</label>-->
+        <!--<input type="text"-->
+               <!--ng-model="emc.exercise.src"-->
+               <!--name="src"-->
+               <!--id="src"-->
+               <!--class="input exercise-">-->
+    <!--</div>-->
+    <button class="button add-new-exercise"
+         ng-if="emc.base"
+         ng-class="{disabled: newExercise.$invalid}"
+         ng-disabled="newExercise.$invalid"
+         ng-click="emc.saveExercise()">Добавить упражнение!</button>
+    <button class="button add-new-exercise"
+         ng-if="!emc.base"
+         ng-class="{disabled: newExercise.$invalid}"
+         ng-disabled="newExercise.$invalid"
+         ng-click="emc.saveExercise()">Сохранить изменения!</button>
+    <!--<pre>{{ newExercise | json }}</pre>-->
+</form>

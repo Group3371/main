@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru" ng-app="FitTreker">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="app.css">
+    <!-- Удалить-->
+    <link href='https://fonts.googleapis.com/css?family=Armata' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Fitness Treker</title>
+</head>
+<body>
+    <div class="naviagation" ng-controller="MainCtrl as mc">
+        <ng-include src="'menu.html'"></ng-include>
+    </div>
+    <!-- Прелоадер -->
+    <div class="preloader" ng-hide="dataLoaded"></div>
+    <!-- Основной контент -->
+    <div class="wrapper" ui-view>
+    </div>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="libs.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

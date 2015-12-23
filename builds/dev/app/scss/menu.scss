@@ -1,0 +1,59 @@
+.navbar {
+  //font-family: "fira_sansmedium";
+  //background: -webkit-linear-gradient(top, rgba(27, 23, 23, 0.48) 1%,rgba(0, 0, 0, 0.42) 8%,rgba(0, 0, 0, 0.74) 98%,rgba(4, 4, 4, 0.97) 100%);
+  border: none;
+  background-color: rgba(199,136,200,0.84);
+  //box-shadow: 0px 3px 1px rgba(84, 81, 81, 0.59);
+  &__container {
+
+  }
+  &-brand {
+    margin-left: 136px;
+    font-size: 35px;
+    letter-spacing: 13px;
+    font-weight: 400;
+    color: #fff;
+    &:hover {
+      color: #000;
+    }
+  }
+  .menu-list {
+    margin-right: 70px;
+  }
+  .menu-list__item {
+    //text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    cursor: pointer;
+    //margin-left: 18px;
+    padding: 14px 9px;
+    &:first-child {
+      margin-left: 0;
+    }
+    .active {
+      border-bottom: 2px solid #fff!important;
+    }
+    &:hover a {
+      //box-shadow: inset 0 0 32px rgba(0,0,0,0.5);
+      border-bottom: 2px solid #fff;
+    }
+
+  }
+  .menu__href {
+    font-size: 19px;
+    color: #fff;
+    padding: 0;
+    &:hover {
+      color: #F1E6E6;
+      background-color: transparent;
+    }
+    background-color: transparent;
+
+  }
+  .search {
+    border: 0;
+    border-radius: 10px;
+    padding-left: 5px;
+    &:focus {
+      outline: none;
+    }
+  }
+}

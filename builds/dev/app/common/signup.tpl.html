@@ -1,0 +1,54 @@
+<form  method="POST" class="form" name="createUser" novalidate ng-submit="hc.registration()">
+    <div class="form-container">
+        <div class="form__head clearfix">
+            <div class="left form__head-header">Registration</div>
+            <div class=" right form__head-redirect">
+                <a ng-click="open('auth')" class="sign-up"> Sign In</a>
+            </div>
+        </div>
+        <div class="form__socials clearfix">
+            <a class="social_fb" ng-click="hc.facebookSignIn()">Log in Fasebook</a>
+            <a class="social_vk">Log in Vkontakte</a>
+        </div>
+        <div class="separator">or</div>
+        <div class="form-input-field clearfix">
+            <div class="input-container">
+                <input class="input input-email"
+                       type="email"
+                       name="email"
+                       email
+                       ng-model="hc.user.email"
+                       placeholder="Email"
+                       ng-class="{'error': createUser.email.$invalid && createUser.email.$dirty}"
+                       required>
+            </div>
+            <div class="input-container">
+                <input class="input input-pass"
+                       type="password"
+                       name="password"
+                       ng-model="hc.user.password"
+                       placeholder="Password"
+                       ng-class="{'error': createUser.password.$invalid && createUser.password.$dirty}"
+                       minlength="3"
+                       maxlength="36"
+                       required>
+            </div>
+            <div class="input-container">
+                <input class="input input-fullname"
+                       type="text"
+                       minlength="3"
+                       maxlength="120"
+                       ng-class="{'error': createUser.fullName.$invalid && createUser.fullName.$dirty}"
+                       name="fullName"
+                       ng-model="hc.user.fullName"
+                       placeholder="Full name"
+                       required>
+            </div>
+            <input type="submit"
+                    ng-class="{disabled: createUser.$invalid}"
+                    ng-disabled="createUser.$invalid"
+                    class="input submit"
+                    value="Sign Up with email">
+        </div>
+    </div>
+</form>

@@ -1,0 +1,46 @@
+<form method="POST" name="newExercise" class="form form-newExerciese" >
+    <div class="form__header">
+        {{ (cmc.create && cmc.newComplex.name) || "Создай свой комплекс упражнений" }}
+    </div>
+    <div class="form-container">
+        <label for="name" class="form-label name-label">Название комплекса</label>
+        <input type="text"
+               ng-model="cmc.newComplex.name"
+               name="name"
+               id="name"
+               placeholder="Название комплекса"
+               class="input">
+    </div>
+    <!--<div class="form-container">-->
+        <!--<label for="src" class="form-label">Картинка</label>-->
+        <!--<input type="text"-->
+               <!--ng-model="cmc.newComplex.src"-->
+               <!--name="src"-->
+               <!--id="src"-->
+               <!--placeholder="URL картинки"-->
+               <!--class="input">-->
+    <!--</div>-->
+    <div class="exercises clearfix">
+        <div class="exercises__left-column">
+            <div class="exercise-list__header">Список всех упражнений</div>
+            <ul class="exercises-list">
+                <li class="exercises-list__item"
+                    ng-class="{'base-exercise': exercise.base}"
+                    ng-repeat="exercise in cmc.exercises">
+                    {{exercise.name}} <span class="add-ex" ng-click="cmc.addExerciseInList(exercise)">+</span>
+                </li>
+            </ul>
+        </div>
+        <div class="exercises__right-column">
+            <div class="exercise-list__header">Упражнения в комплексе</div>
+            <ul class="exercises-list">
+                <li class="exercises-list__item"
+                    ng-class="{'base-exercise': exercise.base}"
+                    ng-repeat="exercise in cmc.newExercises">
+                    {{exercise.name}}<span class="del-ex" ng-click="cmc.deleteExerciseInList(exercise.$id,exercise)">-</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="button add-new-complexe" ng-click="!cmc.create ? cmc.saveComplexe() : cmc.updateComplexe()">Сохранить комплекс!</div>
+</form>

@@ -1,0 +1,33 @@
+<div class="navbar  navbar-fixed-top" role="navigation" ng-controller="NavbarCtrl as nbc">
+    <div class="navbar__container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" ng-if="!isUserLogged" href="#">Fitness Tracker</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <!-- Меню неавторизированного пользователя -->
+            <ul class="nav navbar-nav navbar-right menu-list" ng-if="!isUserLogged">
+                <li class="menu-list__item"><a class="menu__href" ui-sref="home">Home</a></li>
+                <li class="menu-list__item"><a class="menu__href" ui-sref="about">About</a></li>
+                <li class="menu-list__item"><a class="menu__href" ng-click="open('auth')">{{mc.sign}}</a></li>
+            </ul>
+
+            <!-- Меня авторизированного пользователя -->
+            <ul class="nav navbar-nav navbar-left menu-list" ng-if="isUserLogged">
+                <li class="menu-list__item"><a  ui-sref="workout" class="menu__href">Тренировка</a></li>
+                <li class="menu-list__item"><a  ui-sref="exercises" class="menu__href">Мои Упражнения</a></li>
+                <li class="menu-list__item"><a  ui-sref="statistic" class="menu__href">Упражнения</a></li>
+                <li class="menu-list__item"><a  ui-sref="profile({id:currentUser.uid})" class="menu__href">Профиль</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right menu-list" ng-if="isUserLogged">
+                <li class="menu-list__item" ><a class="menu__href" ui-sref="profile({id:currentUser.id})">{{currentUser.fullName}}</a></li>
+                <li class="menu-list__item" ng-if="isUserLogged"><a class="menu__href"  ng-click="nbc.logOut()">Log Out</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>

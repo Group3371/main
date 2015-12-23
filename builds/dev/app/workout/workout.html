@@ -1,0 +1,51 @@
+<div class="workout-container app-container">
+    <div class="main-content clearfix">
+        <aside class="information">
+            <div class="information__header">
+                <div class="information__avatar">
+                    <a href="#" class="avatar-link"><img src="{{currentUser.src}}" class="user-avatar" alt="Мой аватар"></a>
+                </div>
+            </div>
+            <ul class="info-list">
+                <li class="info-list__item"><span class="info-list__index">Name: {{currentUser.fullName}}</span></li>
+                <li class="info-list__item"><span class="info-list__index">Height: {{currentUser.height}}</span></li>
+                <li class="info-list__item"><span class="info-list__index">Weight: {{currentUser.weight}}</span></li>
+                <li class="info-list__item"><span class="info-list__index">Birth: {{wc.dateFormat(currentUser.birthday)}}</span></li>
+            </ul>
+        </aside>
+        <div class="workout main-field">
+            <div class="workout__header ">
+                <label for="search" class="search__label">Мои комплексы:</label>
+                <div class="wrapper-search">
+                    <input type="text" class="search" ng-model="wc.search" id="search" name="search" placeholder="Введите название комплекса...">
+                </div>
+            </div>
+            <div class="workout__tools">
+                <div class="tools__header">Создать комплекс</div>
+                <div class="tools__button" ng-click="wc.createComplexe()">Создать</div>
+            </div>
+            <div class="complecses">
+                <ul class="complecses-lisst" infinite-scroll="wc.LoadMoreComplexes()" infinite-scroll-distance="3">
+                    <!-- Отладочная информация -->
+                    <!--<pre>{{wc.complexes | json}}</pre>-->
+
+                    <li class="complecses-list__item" ng-repeat="complex in wc.complexes | filter:wc.search" style="background: url({{complex.src}})">
+                        <div class="complexes-tools">
+                            <div class="tool tool__update" ng-if="!complex.base" ng-click="wc.updateComplexe(complex)"></div>
+                            <div class="tool tool__delete" ng-if="!complex.base" ng-click="wc.deleteComplexe($index, complex)"></div>
+                        </div>
+                        <a ui-sref="area({id:complex.$id})" ng-click="wc.saveTypeComplexe($index)" class="wrapper">
+                            <div class="complecses-header">{{complex.name}}</div>
+                            <div class="complecses-body">
+                                <ul class="description-list">
+                                    <li class="description-list__item" ng-repeat="exe in complex.exercises" ng-bind="exe.name" ng-class="{'base-exercise': exe.base}"></li>
+                                </ul>
+                            </div>
+                            <div class="complecses__time"><span class="full-time">{{ (wc.complexTime(complex.exercises) || 0) | fullTime}}</span></div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

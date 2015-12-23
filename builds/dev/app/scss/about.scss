@@ -1,0 +1,52 @@
+.about {
+  background-image: url('app/img/test.jpg');
+  background-position: 0 0;
+  background-repeat: no-repeat ;
+  background-size: 100% 100%;
+  &_img-slide {
+    width: 500px!important;
+    height: 300px!important;
+  }
+}
+.slide-container {
+
+  width: 1000px;
+  display: block;
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 50px 5px 0;
+  color: #666;
+
+}
+.advantages {
+  color: #000;
+  text-align: center;
+  margin-top: 30px;
+  &__header {
+    margin-bottom: 30px;
+  }
+  &__row {
+    padding-left: 130px;
+    margin-bottom: 40px;
+  }
+  &__columm {
+    margin-top: 10px;
+    width: 50%;
+    float: left;
+  }
+  &-list {
+    text-align: left;
+    &__item {
+      list-style-type: none;
+      background-image: url('app/img/okey.png');
+      background-position: 0 0;
+      background-repeat: no-repeat ;
+      background-size: auto auto;
+      padding: 0 0 10px 25px;
+      font-size: 16px;
+    }
+  }
+}
+.img-slide {
+  height: 500px;
+}

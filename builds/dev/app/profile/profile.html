@@ -1,0 +1,69 @@
+<div class="profile-header">
+    Учетная запись
+</div>
+<div class="profile-form__container">
+    <form-alert type="{{pc.alert.type}}" class="update-user" close="pc.alertClose()" show="pc.alert.show">{{pc.alert.msg}}</form-alert>
+    <form  method="POST" class="profile-form" name="user" ng-submit="pc.saveChange(user)" novalidate>
+        <div class="form-container clearfix">
+            <label class="profile-form__label" for="fullName">Имя пользователя</label>
+            <input type="text"
+                   ng-class="pc.validate(user.fullName)"
+                   class="profile-form__input"
+                   id="fullName"
+                   ng-model="pc.user.fullName"
+                   ng-minlength="5"
+                   name="fullName">
+        </div>
+        <div class="form-container clearfix">
+            <label class="profile-form__label" for="email" >Электронный адрес</label>
+            <input type="email"
+                   ng-class="pc.validate(user.email)"
+                   class="profile-form__input"
+                   placeholder="Укажите адрес электронной почты"
+                   id="email"
+                   ng-model="pc.user.email"
+                   disabled
+                   name="email">
+        </div>
+        <div class="form-container clearfix">
+            <label class="profile-form__label" for="height">Рост</label>
+            <input type="text"
+                   class="profile-form__input"
+                   placeholder="Ваш рост"
+                   id="height"
+                   ng-class="pc.validate(user.height)"
+                   ng-minlength="2"
+                   ng-maxlength="3"
+                   ng-model="pc.user.height"
+                   required
+                   name="height">
+        </div>
+        <div class="form-container clearfix">
+            <label class="profile-form__label" for="weight">Вес</label>
+            <input type="text"
+                   ng-class="pc.validate(user.weight)"
+                   class="profile-form__input"
+                   placeholder="Ваш вес"
+                   id="weight"
+                   ng-minlength="2"
+                   ng-maxlength="3"
+                   ng-model="pc.user.weight"
+                   required
+                   name="weight">
+        </div>
+        <div class="form-container calendar-container">
+            <label class="profile-form__label" >Дата рождения</label>
+            <md-input-container class="calendar__input">
+                <label>Date</label>
+                <input type="date" ng-model="pc.time" />
+            </md-input-container>
+            <div class="button-calendar md-raised md-warn"
+                       ng-click="pc.showPicker($event)"
+                       aria-label="show picker">show picker</div>
+        </div>
+        <div class="form__buttons">
+            <button type="submit" class="button" ng-disabled="user.$invalid || user.$pristine">Сохранить изменения</button>
+        </div>
+        <!--<pre>{{user | json}}</pre>-->
+    </form>
+</div>

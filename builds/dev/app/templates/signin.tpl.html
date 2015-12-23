@@ -1,0 +1,47 @@
+<form  method="POST" class="form"   name="user" ng-submit="hc.authorisation()" novalidate>
+    <div class="form-container">
+        <div class="form__head clearfix">
+            <div class="left form__head-header">Authorisation</div>
+            <div class=" right form__head-redirect">
+                <a  class="sign-up" ng-click="open('registr')"> Sign Up</a>
+            </div>
+        </div>
+        <div class="form__socials clearfix">
+            <a class="social_fb" ng-click="hc.facebookSignIn()">Log in Fasebook</a>
+            <a class="social_vk">Log in Vkontakte</a>
+        </div>
+        <div class="separator">or</div>
+        <div class="form-input-field clearfix">
+            <div class="input-container">
+                <input class="input input-email"
+                       type="email"
+                       name="email"
+                       ng-model="hc.user.email"
+                       ng-class="{'error':user.email.$invalid && user.$dirty}"
+                       required
+                       placeholder="Email">
+            </div>
+            <div class="input-container">
+                <input class="input input-password"
+                       type="password"
+                       name="password"
+                       ng-model="hc.user.password"
+                       required
+                       min="1"
+                       max="12"
+                       placeholder="Password">
+            </div>
+            <a href="#" class="forgot-pas"> Forgot password?</a>
+            <div class="input-container remember-me">
+                <input  type="checkbox" name="remember">
+                <div  class="remember" for="remember"> Remember me? </div>
+            </div>
+            <input type="submit"
+                   ng-class="{disabled: user.$invalid}"
+                   class="input submit"
+                   ng-disabled="user.$invalid"
+                   value="Sign In">
+        </div>
+        <pre> {{user | json}}</pre>
+    </div>
+</form>

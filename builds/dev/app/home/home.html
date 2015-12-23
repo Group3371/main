@@ -1,0 +1,51 @@
+<div class="wrapper__slide">
+    <div class="carusel" ng-controller="CarouselCtrl as cc">
+        <div>
+            <carousel interval="myInterval" no-wrap="noWrapSlides">
+                <slide ng-repeat="slide in slides" active="slide.active">
+                    <img ng-src="{{slide.image}}" class="img-slide">
+                </slide>
+            </carousel>
+            <div class="carusel-btn" ng-controller="MainCtrl as mc">
+                <a ng-click="open('registr')" class="sign_in">Sign Up For Free</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+<modal-dialog show="show" settings="settings"></modal-dialog>
+<div class="wrapper__slide about">
+    <a name="about"></a>
+    <div class="slide-container">
+        <div class="advantages">
+            <div class="advantages__header">
+                <h2>Million people all over the world use fitness tracker</h2>
+                <h2>So join them</h2>
+            </div>
+            <div class="advantages__row clearfix">
+                <div class="advantages__columm">
+                    <ul class="advantages-list">
+                        <li class="advantages-list__item">Some thing about my app</li>
+                        <li class="advantages-list__item">Some thing about my app</li>
+                        <li class="advantages-list__item">Some thing about my app</li>
+                    </ul>
+                </div>
+                <div class="advantages__columm">
+                    <ul class="advantages-list">
+                        <li class="advantages-list__item">Some thing about my app</li>
+                        <li class="advantages-list__item">Some thing about my app</li>
+                        <li class="advantages-list__item">Some thing about my app</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="carusel about-slide" >
+            <!-- Собственная директива-слайдер. Будет использоваться в дальнейшем-->
+            <!--<ng-slider duration="{{hc.duration}}" >-->
+                <!--<ng-slide ng-repeat="slide in hc.slides">-->
+                    <!--<img src="{{slide.src}}" alt="{{slide.alt}}">-->
+                <!--</ng-slide>-->
+            <!--</ng-slider>-->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+.modal-dialog {
+  //width: 410px;
+}
+.popup {
+  top: -50%;
+  -webkit-transition: all 1000ms cubic-bezier(0.750, 0.165, 0.000, 1);
+  -webkit-transition: all 1000ms cubic-bezier(0.750, 0.165, 0.000, 1.290);
+  -moz-transition: all 1000ms cubic-bezier(0.750, 0.165, 0.000, 1.290);
+  -o-transition: all 1000ms cubic-bezier(0.750, 0.165, 0.000, 1.290);
+  transition: all 1000ms cubic-bezier(0.750, 0.165, 0.000, 1.290);
+}
+.popupModal {
+  top: 50%;
+}
+.popupModal.remove-active {
+   top: -50%;
+ }
+//.popupModal.popupModal-add {
+//  top: 40%;
+//}

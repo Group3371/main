@@ -1,0 +1,42 @@
+<div class="complex-container app-container">
+    <div class="main-content clearfix">
+        <aside class="information">
+            <div class="information__header">
+                <div class="information__avatar">
+                    <a href="#" class="avatar-link"><img src="{{currentUser.src}}"
+                                                         class="user-avatar"
+                                                         alt="Мой аватар"></a>
+                </div>
+            </div>
+            <div class="information-statistics">
+                <ul class="info-list">
+                    <li class="info-list__item"><span class="info-list__index">Количество комплексов: {{ec.getCountComplexes()}}</span></li>
+                    <li class="info-list__item"><span class="info-list__index">Количество упражнений: {{ec.baseExercise.length}}</span></li>
+                </ul>
+            </div>
+        </aside>
+        <div class="complexes main-field">
+            <div class="main-field__header">Мои упражнения</div>
+            <div class="complexes-search">
+                <input type="text" class="search" placeholder="Название комплекса" ng-model="ec.search">
+                <div class="search__button">GO</div>
+            </div>
+            <div class="complexes-content">
+                <div class="col-md-12 complexes-list">
+                    <div class="col-md-6 complexes-list__item new-complex">
+                        <a href="" ng-click="ec.addNewExercise()" class="complex-list__link add-new">Добавить</a>
+                    </div>
+                    <div class="col-md-6 complexes-list__item" ng-repeat="exercise in ec.baseExercise | filter:ec.search" style="background: url({{exercise.src}})">
+                        <div class="base-exercise" ng-if="exercise.base">Базовое упражнение</div>
+                        <div class="user-exercise" ng-if="!exercise.base">Пользовательское упражнение</div>
+                        <div class="delete-exercise" ng-if="!exercise.base" ng-click="ec.deleteExercise(exercise, $index)">X</div>
+                        <div href="" class="complex-list__link" ng-click="ec.showExercise(exercise,$event)">
+                            <div class="complex-list__item-header">{{exercise.name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<pre>{{ec.baseExercise | json}}</pre>-->
+    </div>
+</div>

@@ -1,0 +1,50 @@
+.success {
+  background-color: rgba(106, 215, 150, 0.31);
+  border: 1px solid rgba(80, 159, 110, 0.5);
+  border-radius: 5px;
+}
+.error {
+  background-color: rgba(215, 126, 101, 0.69);
+  border: 1px solid rgba(215, 116, 103, 0.72);
+  border-radius: 5px;
+}
+.form-alert {
+  position: relative;
+  padding: 5px 0 5px 15px;
+  margin: 20px 0;
+}
+.form-alert__close {
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  border: 2px solid rgba(0,0,0,.45);
+  border-radius: 50% 50%;
+  font-weight: bold;
+  font-size: 10px;
+  text-align: center;
+  width: 24px;
+  height: 24px;
+  font: 13px/20px 'Tahoma', Arial, sans-serif;
+  font-weight: bold;
+  &:before {
+    content: "X";
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+  }
+  &:hover {
+    animation: rotate .5s ease-in-out;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

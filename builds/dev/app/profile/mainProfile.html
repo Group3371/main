@@ -1,0 +1,22 @@
+<div class="profile-container app-container clearfix">
+    <div class="profile-content clearfix">
+        <div class="left-column">
+            <div class="information__header">
+                <div class="information__avatar">
+                    <a href="#" class="avatar-link"><img src="{{currentUser.src}}" class="user-avatar" alt="Мой аватар"></a>
+                </div>
+            </div>
+            <div class="nav-container">
+                <ul class="navigation">
+                    <div class="navigation__header">Учетная запись</div>
+                    <li class="navigation__item" ng-class="{'navigation__item-active': pc.activeHref == 'profile' }"><a ng-click="pc.setNewView('profile')" class="navigation__item-href">Достижения</a></li>
+                    <li class="navigation__item" ng-class="{'navigation__item-active': pc.activeHref == 'password'}"><a ng-click="pc.setNewView('password')" class="navigation__item-href">Пароль</a></li>
+                    <li class="navigation__item"><a  class="navigation__item-href">Выход</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="right-column" ng-include="pc.url">
+        </div>
+    </div>
+
+</div>

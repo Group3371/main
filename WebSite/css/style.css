@@ -1,0 +1,206 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 09.12.2015, 18:03:58
+    Author     : Admin
+*/
+
+header, section, footer, nav, article, figure{
+    display: block;
+}
+body{
+    color: #333333;
+    background: url(Tangerines-Wallpaper.png) 100% 100% no-repeat; 
+    background-size: cover; 
+    font-family: Georgia, times, sherif;
+    line-height: 1.4em;
+    margin: 0px;
+}
+.wrapper{
+    width: 1000px;
+   height: 590px;
+    margin: 20px auto 20px auto;
+    border: 2px solid #f47657;
+    background-color: #ffffff;
+}
+header{
+    height: 120px;
+    margin: 0px;
+    background-color: #f47657;
+}
+.logo{
+    float:left;
+    width: 60px;
+    height: 60px;
+    margin-left: 35px;
+    margin-top: 15px;
+}
+
+h1{
+   text-align: center;
+   font-weight: bold;
+   width: 920px;
+    padding: 40px 40px 5px 40px;
+    height: 50px;
+    margin: 0px;
+    color:#ffffff;
+}
+nav, footer{
+    clear: both;
+    color: #333333;
+    background-color: #ffffcc;
+    height: 30px;
+}
+nav ul{
+    text-align: center;
+    margin: 0px;
+    padding: 5px 0px 5px 30px;
+}
+nav li{
+    display: inline;
+    margin-right: 40px;
+}
+nav li a{
+    color: #333333;
+}
+
+.courses{
+    float: left;
+    width: 659px;
+    height: 420px;
+    margin-top: 12px;
+    border-right: 1px solid #eeeeee;
+}
+article{
+    clear: both;
+    overflow: auto;
+    width: 100%;
+    height: 380px;
+}
+.allrecipes{
+    clear: both;
+    overflow: auto;
+    width: 95%;
+    float:left;
+    padding: 10px;
+    margin-top: 5px;
+    margin-left: 32px;
+}
+h2{
+    margin: 10px 0px 5px 0px;
+    padding-top: 20px;
+}
+.titleall{
+    margin-top: 2px;
+}
+figure{
+    float: left;
+    width: 300px;
+    height: 300px;
+    padding: 10px;
+    margin: 20px;
+    border: 1px solid #eeeeee;
+}
+.littleIm{
+    float: left;
+    width: 100px;
+    height: 90px;
+    padding: 10px;
+    margin: 10px;
+}
+.recipe{
+    float: left;
+    width: 600px;
+    height: 100px;
+    padding: 3px;
+    margin: 3px;
+}
+a{
+    color: #586579;
+    text-decoration: none;
+}
+h1, h2{
+    font-weight: normal;
+}
+.mainImage{
+    float: left;
+    margin-right: 10px;
+    width: 300px;
+    height: 300px;
+}
+.recipeImage{
+    float: left;
+    margin-right: 10px;
+    width: 326px;
+    height: 330px;
+}
+.littleImage{
+    float: left;
+    margin-right: 10px;
+    width: 91px;
+    height:90px;
+}
+
+.autorization{
+    width: 230px;
+    height: 200px;
+    float:left;
+    background-color: #ffffcc; 
+    margin: 36px 5px 5px 18px;
+    padding: 20px 1px 155px 40px;
+}
+.titlereg{
+    padding-top: 1px;
+    padding-left: 28px;
+}
+.sendfeedback{
+    padding: 5px;
+}
+input{
+    margin:2px;
+    padding: 10px;
+}
+
+.reg{
+    display: block;
+    text-decoration: underline;
+    font-style: italic; 
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.registration{
+    width: 230px;
+    float:left;
+    background-color: #ffffcc; 
+    margin: 36px 5px 5px 18px;
+    padding: 20px 1px 55px 40px;
+}
+
+form.feedback{
+    display: block;
+    margin-left: 70px;
+    margin-top: 20px;
+}
+
+
+
+footer{
+    font-size: 80%;
+    padding: 7px 0px 0px 20px;
+}
+
+.foot{
+   display: block;
+}
+.VK{
+    margin-left: 470px;
+    
+    text-decoration: underline;
+}
+.feed{
+    text-decoration: underline;
+    margin-left: 50px;
+}

@@ -1,0 +1,101 @@
+{% extends 'template_view.twig' %}
+
+{% block styles %}
+    <style>
+
+        .aut__form {
+            width: 200px;
+        }
+        
+        .login__form {
+            margin-bottom: 20px;
+        }
+
+        .aut__form__login-item {
+            text-align: center;
+        }
+
+        .aut__form-field {
+            padding: 5px;
+            border: 1px solid #180C80;
+            width: 100%;
+        }
+
+        .aut__form-button {
+            padding: 5px;
+            border: 1px solid #180C80;
+            background: transparent;
+        }
+
+        .aut__form-button:hover {
+            background: #180C80;
+            color: #ffffff;
+        }
+
+        .aut__form__login-link {
+            text-decoration: none;
+            color: #007cd9;
+        }
+
+        .aut__form__login-link:hover {
+            text-decoration: underline;
+            color: #004a8f;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <h1>{{ title }}</h1>
+
+    <div class="success_message"></div>
+
+    <div class="aut__form">
+        <section class="aut__form__login">
+            <form method="post" action="/login/" class="login__form">
+                <ul class="aut__form__login-list">
+                    <li class="aut__form__login-item"><input class="aut__form-field" name="login" type="text" placeholder="Email" required></li>
+                    <li class="aut__form__login-item"><input class="aut__form-field" name="password" type="password" placeholder="Пароль" required></li>
+                    <li class="aut__form__login-item">
+                        <input type="submit" class="aut__form-button" value="Войти" />
+                    </li>
+                </ul>
+            </form>
+            <a class="aut__form__login-link" href="/register/">Зарегистрироваться</a>
+        </section>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+
+            $('.login__form').on('submit', function(e) {
+                e.preventDefault();
+
+                var data = $(this).serialize();
+
+                $.ajax({
+                    url: '/login/',
+                    type: 'post',
+                    data: data,
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            $('.aut__form').remove();
+                            $('.success_message').text(data.message);
+                            window.location.href = '/';
+                        } else {
+                            alertify.error(data.message);
+                        }
+                    },
+                    error: function() {
+                        alertify.error('Что-то пошло не так=(');
+                    }
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

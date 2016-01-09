@@ -1,0 +1,150 @@
+{% extends 'template_view.twig' %}
+
+{% block content %}
+<section class="breadcrumbs">
+    <ul>
+        <li>
+            <a href="/">Главная</a>
+        </li>
+        <li>
+            <a href="/products">Каталог</a>
+        </li>
+        <li class="active">
+            <a href="/products/{{ catalog }}">{{ title }}</a>
+        </li>
+    </ul>
+</section>
+
+<section class="products__top">
+    <div class="products__title">{{ title }}</div>
+
+    {% if admin %}
+        <a class="products__add" href="/admin/add_product">Добавить товар</a>
+        <a class="products__selection-all" href="#">Отметить все</a>
+        <a class="products__delete-checked" href="#">Удалить выделенные</a>
+    {% endif %}
+</section>
+
+
+
+<ul class="products">
+    {% for product in products %}
+        <li class="products__product">
+
+            {% if admin %}
+                <a class="products__checkbox" href="#" data-id="{{ product.id }}"></a>
+            {% endif %}
+
+            <a href="/product/{{ product.id }}">
+                <div class="products_img">
+                    {% if product.img %}
+                        <img src="/img/content/{{ product.img }}" alt="{{ product.title }}">
+                    {% else %}
+                        <img src="/img/decor/no_product_image.png" alt="{{ product.title }}">
+                    {% endif %}
+                </div>
+                <div class="products_title">
+                    <span>{{ product.title }}</span>
+                </div>
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+
+<ul class="pagination__list">
+    {% if pages > 1 %}
+        {% for page in 1..pages %}
+            {% if page == activePage %}
+                <li class="pagination__item active"><a class="pagination__item-link">{{ page }}</a></li>
+            {% else %}
+                    <li class="pagination__item"><a class="pagination__item-link" href="/products/{{ catalog }}/{{ page }}">{{ page }}</a></li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</ul>
+{% endblock %}
+
+{% block scripts %}
+
+    <script>
+        (function() {
+
+            var checkboxes = $('.products__checkbox');
+
+            checkboxes.on('click', function(e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                if ($this.hasClass('checked')) {
+                    $this.removeClass('checked');
+                } else {
+                    $this.addClass('checked');
+                }
+            });
+
+            $('.products__selection-all').on('click', function(e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                if ($this.hasClass('reverse_selection')) {
+                    checkboxes.each(function() {
+                        $(this).removeClass('checked');
+                    });
+
+                    $this.text('Отметить все');
+                    $this.removeClass('reverse_selection');
+                } else {
+                    checkboxes.each(function() {
+                        $(this).addClass('checked');
+                    });
+
+                    $this.text('Убрать выделение');
+                    $this.addClass('reverse_selection');
+                }
+            });
+
+            $('.products__delete-checked').on('click', function(e) {
+                e.preventDefault();
+
+                alertify.confirm('Вы уверены, что хотите удалить выбранные товары?', function() {
+                    var
+                        checked = checkboxes.filter('.checked'),
+                        dataSet = {
+                            data: []
+                        };
+
+
+                    for (var i = 0; i < checked.length; i++) {
+                        dataSet.data[i] = checked.eq(i).data('id');
+                    }
+
+
+
+                    $.ajax({
+                        url: '/admin/delete_products',
+                        data: dataSet,
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(data) {
+                            for (var i = 0; i < data.length; i++) {
+                                if (data[i].status == 'success') {
+                                    alertify.success(data[i].message);
+                                    checked.filter('[data-id="' + data[i].id + '"]').closest('.products__product').remove();
+                                } else {
+                                    alertify.error(data[i].message);
+                                }
+                            }
+                        },
+                        error: function() {
+                            alertify.error('Произошла какая-то ошибка на сервере!');
+                        }
+                    });
+                });
+            });
+
+        })();
+    </script>
+
+{% endblock %}

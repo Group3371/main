@@ -1,0 +1,61 @@
+@color-link: #0070aa;
+
+.wrapper_auth {
+  background: #91B127;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-width: 400px;
+
+  vertical-align: middle;
+  text-align: center;
+}
+
+.wrapper_auth:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 0;
+  vertical-align: middle;
+}
+
+.authorize_popup {
+  display: inline-block;
+}
+
+.login {
+  position: absolute;
+  right: 0;
+  top: -30px;
+  &__link {
+    color: @color-link;
+  }
+}
+
+h1 {
+  color: #014472;
+  font-weight: normal;
+}
+.g-recaptcha {
+  display: inline-block;
+  margin-left: -5px;
+}
+.aut {
+  &__form__login-item {
+    margin-bottom: 8px;
+  }
+  &__form__login-link {
+    font-size: 13px;
+  }
+  &__g-recaptcha {
+    display: inline-block;
+  }
+  &__err {
+    color: #c00;
+  }
+  &__no_err {
+    color: #55cc22;
+  }
+}

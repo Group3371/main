@@ -1,0 +1,135 @@
+{% extends 'template_view.twig' %}
+
+{% block content %}
+    {% if incart %}
+        <div class="address_delivery">
+            <div class="contacts_title">Ваши данные</div>
+            <div class="address_error"></div>
+            <form id="adres" method="post" action="/purchase">
+                <div class="address_form_field">
+                    <div class="text_input">
+                        <div class="text_input_wrap">
+                            <input type="text" name="firstname" placeholder="Имя" class="address_input" maxlength="20"
+                                   value="{{ userName }}">
+                        </div>
+                    </div>
+                    <div class="address_require_star"></div>
+                </div>
+                <div class="address_form_field">
+                    <div class="text_input">
+                        <div class="text_input_wrap">
+                            <input type="text" name="lastname" placeholder="Фамилия" class="address_input"
+                                   maxlength="30" value="{{ userLastname }}">
+                        </div>
+                    </div>
+                    <div class="address_require_star"></div>
+                </div>
+                <div class="address_form_field">
+                    <textarea class="delivery_address" name="address"
+                              placeholder="Адрес доставки">{{ userAddress }}</textarea>
+
+                    <div class="address_require_star"></div>
+                </div>
+                <div class="address_form_field">
+                    Способ доставки: <br/>
+                    <input type="radio" name="id_delivery" id="self" value="1" checked>
+                    <label for="self">Самовывоз - бесплатно</label><br/>
+                    <input type="radio" name="id_delivery" id="courier" value="2">
+                    <label for="courier">Доставка на дом - 300 руб.</label><br/>
+
+                    <div class="address_require_star"></div>
+                </div>
+                <div class="address_form_field">
+                    <label for="payment">Способ оплаты:</label>
+                    <select name="payment" id="payment">
+                        {% for payment in payments %}
+                            <option value="{{ payment.id }}">{{ payment.title }}</option>
+                        {% endfor %}
+                    </select>
+                    <br/>
+                    <br><br>
+
+                    <div class="address_require_star"></div>
+                </div>
+                <div class="summary_underline"></div>
+                <div class="address_submit">
+                    <button type="submit" title="Перейти к покупке" class="address_submit_btn">
+                        ОФОРМИТЬ
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="final_cart">
+            <div class="contacts_title">Ваши покупки</div>
+            <table class="final_cart_table">
+
+                {% for cartelement in incart %}
+                    <tr>
+                        <td>{{ cartelement.title }}<br/></td>
+                        <td>{{ cartelement.price }} руб.</td>
+                        <td>{{ cartelement.quantity }}</td>
+                        <td>{{ cartelement.subtotal }} руб.</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3">Итого:</td>
+                    <td>{{ total_price }} руб.</td>
+                </tr>
+                <tr>
+                    <td colspan="3">Стоимость доставки:</td>
+                    <td id="delivery_price">{{ delivery_price }} руб.</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><strong>К оплате:</strong></td>
+                    <td id="final_price"><strong>{{ final_price }} руб.</strong></td>
+                </tr>
+            </table>
+        </div>
+    {% else %}
+        В вашей корзине нет товаров
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+
+            /* Проверка формы с адресом доставки */
+            $('.address_delivery > form').on('submit', function(e) {
+
+                e.preventDefault();
+
+                var data = $(this).serialize();
+
+                $.ajax({
+                    url: '/purchase/',
+                    type: 'post',
+                    data: data,
+                    dataType: 'json',
+                    beforeSend: function() {
+                        $(this).find('button[type="submit"]').attr('disabled', 'disabled');
+                        alertify.warning('Подождите, заказ обрабатывается...');
+                    },
+                    success: function(data){
+                        if (data.msg == 'success') {
+                            $(".header_cart #amount").html(data.total_amount);
+                            $(".header_cart #price").html(data.total_price + " руб.");
+                            $('.features').empty().text("Поздравляем! Ваш заказ принят!");
+                        } else {
+                            $(".address_delivery .address_error").html(data.msg);
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+                        alertify.error('Что-то пошло не так=(');
+                    },
+                    complete: function(data) {
+                        $(this).find('button[type="submit"]').prop('disabled', false);
+                    }
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

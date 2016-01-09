@@ -1,1 +1,13 @@
 .idea/
+libs/
+bower/
+config/
+
+# Игнорируем все файлы в папке files кроме temp.txt.
+# Для того, чтобы можно было залить директорию на github
+files/*
+!files/temp.txt
+
+# То же самое с папкой temp
+temp/*
+!temp/temp.txt

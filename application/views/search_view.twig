@@ -1,0 +1,91 @@
+{% extends 'template_view.twig' %}
+
+{% block content %}
+
+    <section class="searchpage">
+        <h1 class="searchpage__title">Поиск товаров</h1>
+
+        <form class="searchpage__form" method="post" action="/search">
+            <div class="searchpage__name-wrap">
+                <input class="searchpage__name" type="text" name="name" placeholder="Название товара" value="{{ params.name }}"/>
+            </div>
+            <div class="search__price">
+                <input class="searchpage__price-input" type="text" name="price" data-min="{{ min_price }}" data-max="{{ max_price }}" readonly/>
+                <div class="searchpage__price-range"></div>
+            </div>
+            <select class="searchpage__producer" name="producer">
+                <option class="searchpage__producer-value" value="all">Все производители</option>
+                {% for producer in producers %}
+                    {% if producer.id == params.producer %}
+                        <option class="searchpage__producer-value" value="{{ producer.id }}" selected>{{ producer.title }}</option>
+                    {% else %}
+                        <option class="searchpage__producer-value" value="{{ producer.id }}">{{ producer.title }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <select class="searchpage__category" name="category">
+                <option class="searchpage__category-value" value="all">Все категории</option>
+                {% for category in categories %}
+                    {% if category.id == params.category %}
+                        <option class="searchpage__category-value" value="{{ category.id }}" selected>{{ category.title }}</option>
+                    {% else %}
+                        <option class="searchpage__category-value" value="{{ category.id }}">{{ category.title }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <input class="searchpage__submit" type="submit" name="submit" value="Искать"/>
+        </form>
+
+        <div class="searchpage__results">
+            <ul class="searchpage__list">
+                {% for product in products %}
+                    <li class="searchpage__item">
+                        <a class="searchpage__item--link" href="/product/{{ product.id }}">
+                            <div class="searchpage__item-left">
+                                <img class="searchpage__item-img" src="/img/content/{{ product.img }}" alt="{{ product.title }}"/>
+                            </div>
+                            <div class="searchpage__item-right">
+                                <div class="searchpage__item-title">{{ product.title }}</div>
+                                <div class="searchpage__options">
+                                    <ul class="options__list">
+                                        <li class="options__item">Каталог: {{ product.category }}</li>
+                                        <li class="options__item">Производитель: {{ product.producer }}</li>
+                                        <li class="options__item">Цена: {{ product.price }}</li>
+                                        <li class="options__item">ОС: {{ product.os }}</li>
+                                        <li class="options__item">Цвет: {{ product.color }}</li>
+                                        <li class="options__item">Размер экрана: {{ product.screen_size }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+
+        /* Range Slider для цены */
+
+        $('.searchpage__price-range').slider({
+            range: true,
+            min: $('.searchpage__price-input').data('min'),
+            max: $('.searchpage__price-input').data('max'),
+            values: [ $('.searchpage__price-input').data('min'), $('.searchpage__price-input').data('max') ],
+            slide: function( event, ui ) {
+                $( ".searchpage__price-input" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] + " руб");
+            }
+        });
+
+        $( ".searchpage__price-input" ).val($( ".searchpage__price-range" ).slider( "values", 0 ) +
+        " - " + $( ".searchpage__price-range" ).slider( "values", 1 ) + " руб");
+
+        $('.searchpage__producer').selectBoxIt();
+        $('.searchpage__category').selectBoxIt();
+    </script>
+
+{% endblock %}

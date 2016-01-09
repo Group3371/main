@@ -1,0 +1,173 @@
+{% extends 'template_view.twig' %}
+
+
+{% block content %}
+
+    <section class="breadcrumbs">
+        <ul>
+            <li>
+                <a href="/">Главная</a>
+            </li>
+            <li>
+                <a href="/products">Каталог</a>
+            </li>
+            <li>
+                <a href="/products/{{ product.id_category }}">{{ category }}</a>
+            </li>
+            <li class="active">
+                <a href="/product/{{ product.id }}">{{ product.title }}</a>
+            </li>
+        </ul>
+    </section>
+
+    <section class="h1">{{ product.title }}</section>
+
+    <section class="item">
+        <div class="item_left">
+            <div class="item_card_view">
+                <div class="category_list_show">
+                    <a href="#fancy" class="category_show_full">
+                        <div class="category_full_wrap">
+                            {% if product.img %}
+                                <img src="/img/content/{{ product.img }}" alt="{{ product.title }}">
+                            {% else %}
+                                <img src="/img/decor/no_product_image.png" alt="{{ product.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="category_full_mask"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="category_order_rating">
+                <div class="category_rating_title">На складе:</div>
+                <ul class="category_rating_count">
+                    {% if count != 0 %}
+                        {% for i in 0..count %}
+                            <li class="filled"></li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+                <div class="category_rating_amount"></div>
+            </div>
+        </div>
+        <div class="item_right">
+            <div class="item_options">
+                <div class="error_msg_counts"></div>
+                <ul class="item_counts">
+                    {% if product.price %}
+                    <li>
+                        <div class="item_counts_price">
+                            Цена: <span class="cart_counter">{{ product.price }}</span> руб.
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    {% if product.producer %}
+                    <li>
+                        <div class="item_counts_code">
+                            Производитель: <span>{{ product.producer }}</span>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    {% if product.color %}
+                    <li>
+                        <div class="item_counts_code">
+                            Цвет: <span>{{ product.color }}</span>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    {% if product.screen_size %}
+                    <li>
+                        <div class="item_counts_code">
+                            Размер экрана: <span>{{ product.screen_size }}</span>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    {% if product.os %}
+                    <li>
+                        <div class="item_counts_code">
+                            Операционная система: <span>{{ product.os }}</span>
+                        </div>
+                    </li>
+                    {% endif %}
+                </ul>
+                <div class="category_buy_counter">
+                    <form method="post" action="/cart">
+                        <div class="text_input">
+                            <div class="text_input_wrap">
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+
+                                <input class="category_count_input" type="number" name="count" value="1" min="1"/>
+                            </div>
+                        </div>
+                        <a href="" class="category_count_button">В корзину</a>
+                        <input class="category_count_submit" type="submit"/>
+                    </form>
+                </div>
+            </div>
+            <div class="item_properties">
+                <ul class="item_prop_list">
+                    {% if product.description %}
+                        <li>
+                            <div class="item_prop_title">Описание</div>
+                            <ul class="item_prop_options">
+                                <li>
+                                    {{ product.description }}
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            {% if admin %}
+                <a class="item__delete-link" href="#" data-id="{{ product.id }}">Удалить</a>
+                <a class="item__edit-link" href="/admin/update_product/{{ product.id }}">Редактировать</a>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+
+    <script>
+
+        $('.item__delete-link').on('click', function(e) {
+            e.preventDefault();
+
+            var $this = $(this);
+
+            alertify.confirm('Вы уверены, что хотите удалить данный товар?', function() {
+
+                var dataSet = {
+                    data: []
+                };
+
+                dataSet.data[0] = $this.data('id');
+
+                $.ajax({
+                    url: '/admin/delete_products',
+                    data: dataSet,
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data[0].status == 'success'){
+                            alertify.success(data[0].message);
+                            window.location.href = '/products/all';
+                        } else {
+                            alertify.error(data[0].message);
+                        }
+                    },
+                    error: function() {
+                        alertify.error('Произошла какая-то ошибка на сервере!');
+                    }
+                });
+            });
+        });
+
+    </script>
+
+{% endblock %}

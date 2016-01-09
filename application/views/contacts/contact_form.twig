@@ -1,0 +1,43 @@
+<section class="feedback">
+    <div class="contacts_title">Свяжитесь с нами</div>
+    <div class="feedback_error"></div>
+    <div class="feedback_waiting"></div>
+    <form action="/contacts/" method="post">
+        <div class="feedback_form_field">
+            <div class="text_input">
+                <div class="text_input_wrap">
+                    <input type="text" name="name" placeholder="Имя" class="feedback_input">
+                </div>
+            </div>
+            <div class="feedback_require_star"></div>
+        </div>
+        <div class="feedback_form_field">
+            <div class="text_input">
+                <div class="text_input_wrap">
+                    <input type="text" name="phone" placeholder="Телефон" class="feedback_input">
+                </div>
+            </div>
+        </div>
+        <div class="feedback_form_field">
+            <div class="text_input">
+                <div class="text_input_wrap">
+                    <input type="email" name="email" placeholder="E-MAIL" class="feedback_input">
+                </div>
+            </div>
+            <div class="feedback_require_star"></div>
+        </div>
+        <div class="feedback_form_field">
+            <textarea class="feedback_massage" name="message" placeholder="Текст сообщения"></textarea>
+
+            <div class="feedback_require_star"></div>
+        </div>
+        <div class="feedback_form_field">
+            <div class="g-recaptcha" data-sitekey="{{ config.captcha.google_recaptcha_public }}"></div>
+            <div class="feedback_require_star"></div>
+        </div>
+        <div class="feedback_submit_block">
+            <a href="" class="feedback_submit_btn">Отправить</a>
+            <input type="submit">
+        </div>
+    </form>
+</section>

@@ -1,0 +1,196 @@
+{% extends 'template_view.twig' %}
+
+{% block content %}
+
+    <section class="edition__product">
+        <div class="edition__product-title">{{ title }}</div>
+
+        <div class="product__form--wrap">
+            <form class="product__form" action="/admin/update_product" method="post" name="product__form" enctype="multipart/form-data">
+
+                <div class="product__title--wrap">
+                    <input class="product__title" type="text" name="title" placeholder="Название" value="{{ product.title }}"/>
+                </div>
+
+                <div class="product__category">
+                    <label class="product__category-label">Категория: </label>
+                    <select class="product__category-select" name="category">
+                        {% for category in categories %}
+                            {% if category.id == product.id_category %}
+                                <option value="{{ category.id }}" selected>{{ category.title }}</option>
+                            {% else %}
+                                <option value="{{ category.id }}">{{ category.title }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="product__producer">
+                    <label class="product__producer-label">Производитель: </label>
+                    <select class="product__producer-select" name="producer">
+                        {% for producer in producers %}
+                            {% if producer.id == product.id_producer %}
+                                <option value="{{ producer.id }}" selected>{{ producer.title }}</option>
+                            {% else %}
+                                <option value="{{ producer.id }}">{{ producer.title }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="product__count--wrap">
+                    <input class="product__count" type="number" name="count" placeholder="Количество на складе" value="{{ product.count }}"/>
+                </div>
+
+                <div class="product__price--wrap">
+                    <input class="product__price" type="number" name="price" placeholder="Цена" value="{{ product.price }}"/>
+                </div>
+
+                <div class="product__color--wrap">
+                    <input class="product__color" type="text" name="color" placeholder="Цвет" value="{{ product.color }}"/>
+                </div>
+
+                <div class="product__screen_size--wrap">
+                    <input class="product__screen_size" title="Указывается в дюймах" type="text" name="screen_size" placeholder="Размер экрана" value="{{ product.screen_size }}"/>
+                </div>
+
+                <div class="product__os--wrap">
+                    <input class="product__os" type="text" name="os" placeholder="Операционная система" value="{{ product.os }}"/>
+                </div>
+
+                <div class="product__image">
+                    <label class="product__image-label">Картинка: </label>
+                    <a class="product__image-button" href="#">Загрузить</a>
+                    <span class="product__imagename">{{ product.img }}</span>
+                    <input class="product__imagename-input" type="hidden" name="imagename" value="{{ product.img }}"/>
+                    <input class="product__image-file" type="file" name="image" value="Загрузить" accept="image/*"/>
+                </div>
+
+                <textarea class="product__description" name="description" placeholder="Описание">{{ product.description }}</textarea>
+
+                <div class="product__edit">
+                    <input type="hidden" value="{{ product.id }}" name="id"/>
+                    <input class="product__edit-button" type="submit" name="submit" value="Сохранить"/>
+                    <a class="product__edit-cancel" href="/products/all">Отменить</a>
+                </div>
+            </form>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        (function() {
+
+            // Устанавливаем красивые селекты
+            $('.product__category-select').selectBoxIt();
+            $('.product__producer-select').selectBoxIt();
+
+            // Подсказка
+            var tooltips = $('.product__screen_size').tooltip({
+                position: {
+                    my: "left top",
+                    at: "right+5 top-5"
+                }
+            });
+
+            // Загрузка изображения
+            $('.product__image-button').on('click', function(e) {
+                e.preventDefault();
+
+                $('.product__image-file').trigger('click');
+            });
+
+            $('.product__image-file').fileupload({
+                url: '/admin/product_image_upload',
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 'success') {
+                        alertify.success(data.message);
+                        $('.product__imagename').text(data.filename);
+                        $('.product__imagename-input').val(data.filename);
+                    } else {
+                        alertify.error(data.message);
+                    }
+                },
+                error: function() {
+                    alertify.error('Ошибка при загрузке файла');
+                }
+            });
+
+            // Устанавливаем обычную стилизацию, чтобы при клике пропадали стили ошибок
+            $('input:not([type="submit"])').on('click', function() {
+                $(this).css({
+                    'background': 'white',
+                    'border-color': '#a8611e'
+                });
+            });
+
+            // Сохранение изменений
+            $('.product__form').on('submit', function(e) {
+                e.preventDefault();
+
+                var data = $(this).serialize();
+
+                if (verifyForm()) {
+                    $.ajax({
+                        url: '/admin/update_product/',
+                        type: 'post',
+                        dataType: 'json',
+                        data: data,
+                        success: function (data) {
+                            window.location.href = '/product/' + $('input[name="id"]').val();
+                        },
+                        error: function () {
+                            alertify.error('Призошла какая-то ошибка!');
+                        }
+                    });
+                }
+            });
+
+            // Валидация формы
+            function verifyForm() {
+                var
+                        flag = true,
+                        title = $('.product__title'),
+                        count = $('.product__count'),
+                        price = $('.product__price');
+
+                if (title.val() < 2 || title.val() > 50) {
+                    flag = false;
+                    title.css({
+                        'background': 'rgba(217, 41, 26, 0.67)',
+                        'border-color': 'rgb(217, 41, 26)'
+                    });
+                }
+
+                if (price.val() == '' || isNaN(price.val()) || price.val() < 0) {
+                    flag = false;
+                    price.css({
+                        'background': 'rgba(217, 41, 26, 0.67)',
+                        'border-color': 'rgb(217, 41, 26)'
+                    });
+                }
+
+                if (count.val() == '' || isNaN(count.val()) || count.val() < 0) {
+                    flag = false;
+                    count.css({
+                        'background': 'rgba(217, 41, 26, 0.67)',
+                        'border-color': 'rgb(217, 41, 26)'
+                    });
+                }
+
+                return flag;
+            }
+
+            // Очистка формы
+            function clearForm() {
+                $('input:not([type="submit"])').each(function() {
+                    $(this).val('');
+                });
+            }
+
+        })();
+    </script>
+{% endblock %}

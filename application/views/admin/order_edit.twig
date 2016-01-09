@@ -1,0 +1,212 @@
+{% extends 'template_admin.twig' %}
+
+{% block styles %}
+    <style>
+        .edit__order-address {
+            resize: none;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="col-md-5">
+        <h2>Информация о покупателе</h2>
+
+        <form method="post" action="/admin/delivery_update/" class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="email" class="col-sm-3 control-label">E-mail</label>
+
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="email" placeholder="E-mail" readonly="readonly"
+                           value="{{ user.email }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Имя</label>
+
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="name" placeholder="Имя" readonly="readonly"
+                           value="{{ user.name }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastname" class="col-sm-3 control-label">Фамилия</label>
+
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="lastname" placeholder="Фамилия" readonly="readonly"
+                           value="{{ user.lastname }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address" class="col-sm-3 control-label">Адрес</label>
+
+                <div class="col-sm-8">
+                    <textarea class="edit__order-address form-control" rows="5" id="address" readonly="readonly"
+                              placeholder="Адрес">{{ user.address }}</textarea>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+        <h2>Информация о заказе</h2>
+
+        <form method="post" action="/admin/order_update/" class="form-horizontal" role="form"
+              id="update_status_order-form">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Номер заказа</label>
+
+                <div class="col-sm-8 controls">
+                    <input id="order_id" type="text" class="form-control" placeholder="Номер заказа" readonly="readonly"
+                           value="{{ order.id }}">
+                    <input id="id_user" type="hidden" class="form-control" value="{{ user.id }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="datetimepicker2" class="col-sm-4 control-label">Дата заказа</label>
+
+                <div class="col-sm-8 controls">
+                    <div class="input-group">
+                        <label for="datetimepicker2" class="input-group-addon btn">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </label>
+                        <input id="datetimepicker2" type="text" class="date-picker form-control" readonly="readonly"
+                               value="{{ order.date_order }}"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="id_payment" class="col-sm-4 control-label">Способ оплаты</label>
+
+                <div class="col-sm-8 controls">
+                    <input id="id_payment" type="text" class="form-control" placeholder="Способ оплаты"
+                           readonly="readonly"
+                           value="{{ id_payment.title }}">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="id_delivery" class="col-sm-4 control-label">Способ доставки</label>
+
+                <div class="col-sm-8 controls">
+                    <input id="id_delivery" type="text" class="form-control" placeholder="Способ доставки"
+                           readonly="readonly"
+                           value="{{ id_delivery.title }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="datetimepicker1" class="col-sm-4 control-label">Дата обновления</label>
+
+                <div class="col-sm-8 controls">
+                    <div class="input-group">
+                        <label for="datetimepicker1" class="input-group-addon btn">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </label>
+                        <input id="datetimepicker1" type="text" class="date-picker form-control" readonly="readonly"
+                               value="{{ order.date_order_update }}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_status" class="col-sm-4 control-label">Статус заказа</label>
+
+                <div class="col-sm-8">
+                    <select class="form-control" id="id_status">
+                        {% for id_status in id_statuses %}
+                            <option value="{{ id_status.id }}" {% if order.id_status == id_status.id %}
+                            selected {% else %} {% endif %}>{{ id_status.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
+                    <input type="hidden" name="id" value="{{ user.id }}">
+                    <input type="submit" name="submit" class="btn btn-primary pull-right" value="Сохранить">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Наименование товара</th>
+                <th>Цена, руб.</th>
+                <th>Количество</th>
+                <th>Сумма, руб.</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for comp_order in comp_orders %}
+                <tr>
+                    <td>
+                        <div class="category_full_wrap">
+                            <img src="/img/content/{{ comp_order.product.img }}" class="img-thumbnail"
+                                 alt="{{ comp_order.product.title }}"
+                                 width="304" height="236"/>
+                        </div>
+                    </td>
+                    <td class="id_value">{{ comp_order.product.id }}</td>
+                    <td>{{ comp_order.product.title }}</td>
+                    <td>{{ comp_order.price }}</td>
+                    <td>{{ comp_order.count }}</td>
+                    <td>{{ comp_order.sum|number_format(2, '.', '') }}</td>
+                </tr>
+            {% endfor %}
+            <tr class="success">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="text-right">Итого:</td>
+                <td>{{ total.total_count }}</td>
+                <td>{{ total.total_sum|number_format(2, '.', '') }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+
+            $('#update_status_order-form').on('submit', function (e) {
+                e.preventDefault();
+                selected_value = $("#id_status :selected").val();
+                selected_id = $("#order_id").val();
+                selected_user = $("#id_user").val();
+
+                $.ajax({
+                    url: '/admin/order_update/',
+                    type: 'post',
+                    data: {id_status: selected_value, order_id: selected_id, id_user: selected_user},
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.msg == 'success') {
+                            alertify.success('Данные успешно обновленны!');
+                            $('#datetimepicker1').val(data.new_date);
+                        } else {
+                            alertify.error(data.msg);
+                        }
+                    },
+                    error: function () {
+                        alertify.error('Что-то пошло не так=(');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

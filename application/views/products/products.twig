@@ -1,0 +1,124 @@
+{% extends 'template_view.twig' %}
+
+{% block content %}
+    <section class="breadcrumbs">
+        <ul>
+            <li>
+                <a href="/">Главная</a>
+            </li>
+            <li class="active">
+                <a href="/products/all">{{ title }}</a>
+            </li>
+        </ul>
+    </section>
+
+    <section class="h1">{{ title }}</section>
+
+    <div class="catalogs__messages">
+        <div class="catalogs__error-message">{{ messages.error_message }}</div>
+        <div class="catalogs__success-message">{{ messages.success_message }}</div>
+    </div>
+
+    <ul class="catalogs">
+        <li class="catalogs__item">
+            <a class="catalogs__item-link" href="/products/all">
+                <div class="catalogs__item-title">Все</div>
+            </a>
+        </li>
+        {% for catalog in catalogs %}
+            <li class="catalogs__item">
+                <a class="catalogs__item-link" href="/products/{{ catalog.id }}">
+                    <div class="catalogs__item-title"> {{ catalog.title }} </div>
+                </a>
+                {% if admin %}
+                    <div class="catalogs__item--icons">
+                        <a class="catalogs__item-edit" href="#" data-id="{{ catalog.id }}" data-title="{{ catalog.title }}"></a>
+                        <a class="catalogs__item-delete" href="#" data-id="{{ catalog.id }}" data-title="{{ catalog.title }}"></a>
+                    </div>
+                {% endif %}
+            </li>
+        {% endfor %}
+
+        {% if admin %}
+            <li class="catalogs__item catalogs__item-new">
+                <a class="catalogs__item-link" href="#">
+                    <div class="catalogs__item-title">Добавить новую категорию</div>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        /* Редактирование категорий */
+        (function() {
+            var contentCreate =
+                    '<div class="category__new-title">Добавление новой категории</div>' +
+                    '<form action="/products" method="post" class="category__new">' +
+                    '<input type="text" name="title" placeholder="Введите название" class="category__new-name"/>' +
+                    '<input type="hidden" name="action" value="new"/>' +
+                    '<input type="submit" value="Добавить" class="category__new-button"/>' +
+                    '</form>';
+
+            $('.catalogs__item-new .catalogs__item-link').popup({
+                content: contentCreate,
+                type: 'html'
+            });
+
+            var contentDelete =
+                    '<div class="category__delete-title">Вы уверены, что хотите удалить данную категорию?</div>' +
+                    '<form action="/products" method="post" class="category__delete">' +
+                    '<input class="category__delete-button" type="submit" value="Уверен!"/>' +
+                    '<input type="hidden" name="action" value="delete"/>' +
+                    '<input class="category__delete-id" type="hidden" name="id" value="0" >' +
+                    '</form>';
+
+            $('.catalogs__item-delete').popup({
+                content: contentDelete,
+                type: 'html',
+                afterOpen: function(e) {
+                    var id = $(this.ele).data('id'),
+                            categoryTitle = $(this.ele).data('title');
+
+                    $('.category__delete-id').val(id);
+                    $('.category__delete-title').text('Вы уверены, что хотите удалить категорию "' + categoryTitle + '"?');
+                }
+            });
+
+            var contentEdit =
+                    '<div class="category__edit-title">Редактирование категории</div>' +
+                    '<form action="/products" method="post" class="category__edit">' +
+                    '<input type="text" name="title" placeholder="Введите новое название" class="category__edit-name"/>' +
+                    '<input type="hidden" name="action" value="edit"/>' +
+                    '<input type="submit" value="Изменить" class="category__edit-button"/>' +
+                    '<input class="category__edit-id" type="hidden" name="id" value="0" >' +
+                    '</form>';
+
+            $('.catalogs__item-edit').popup({
+                content: contentEdit,
+                type: 'html',
+                afterOpen: function(e) {
+                    var
+                            id = $(this.ele).data('id'),
+                            categoryTitle = $(this.ele).data('title');
+
+                    $('.category__edit-id').val(id);
+                    $('.category__edit-name').val(categoryTitle);
+                }
+            });
+
+            var
+                    errorMessage = $('.catalogs__error-message'),
+                    successMessage = $('.catalogs__success-message');
+
+            if (errorMessage.length && errorMessage.text().length) {
+                alertify.error(errorMessage.text());
+            }
+
+            if (successMessage.length && successMessage.text().length) {
+                alertify.success(successMessage.text());
+            }
+        })();
+    </script>
+{% endblock %}

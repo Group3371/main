@@ -1,0 +1,40 @@
+<section class="slideshow">
+    <a href="#" class="slideshow_left"></a>
+    <a href="#" class="slideshow_right"></a>
+    <div class="slideshow_wrap">
+        <ul class="slideshow_list">
+            {% for product in slider_products %}
+                <li>
+                    <div class="slideshow_list_item">
+                        <div class="slideshow_item_text">
+                            <div class="slideshow_text_title">
+                                <img src="/img/decor/slogan.png" alt="">
+                            </div>
+                            <div class="slideshow_text_area">
+                                <div class="slideshow_text_sale">
+                                    <span>13,5</span>
+                                </div>
+                                <div class="slideshow_text_descript">
+                                    <div class="slideshow_descript_title">Скидки</div>
+                                    <div class="slideshow_descr_for">на компьютеры и планшеты</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slideshow_item_images">
+                            <img src="/img/content/{{ product.img }}" alt="{{ product.title }}">
+                        </div>
+                    </div>
+
+                    <div class="slideshow_descript">
+                        <div class="slideshow_descript_inner">
+                            <div class="slideshow_descr_title">
+                                <a href="/product/{{ product.id }}">{{ product.title }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>

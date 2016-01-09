@@ -1,0 +1,80 @@
+{% extends 'template_admin.twig' %}
+
+{% block content %}
+
+    <div class="table-responsive">
+        <p>
+            <a href="/products/" class="btn btn-primary pull-right">Добавить заказ</a>
+        </p>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Ф.И.О</th>
+                <th>Дата заказа</th>
+                <th>Сумма, руб.</th>
+                <th>Статус</th>
+                <th>Дата обновления</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td class="id_value">{{ order.id }}</td>
+                    <td>{{ order.user.name }} {{ order.user.lastname }}</td>
+                    <td>{{ order.date_order }}</td>
+                    <td>{{ order.sum|number_format(2, '.', '') }}</td>
+                    <td>{{ order.status_name.title }}</td>
+                    <td>{{ order.date_order_update }}</td>
+                    <td><a href="/admin/order_update/{{ order.id }}">Изменить</a></td>
+                    <td><a class="order_delete" href="#" data-id="{{ order.id }}">Удалить</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+
+            // Делаем активной текущую страницу в навигации
+            $('.admin__link-orders').addClass('active');
+
+            $('.order_delete').on('click', function (e) {
+                e.preventDefault();
+
+                var
+                        $this = $(this),
+                        data = {
+                            id: $this.data('id')
+                        };
+
+                alertify.confirm('Вы уверены, что хотите удалить этот заказ?', function () {
+
+                    $.ajax({
+                        url: '/admin/order_delete/',
+                        type: 'post',
+                        data: data,
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data == true) {
+                                alertify.success('Заказ успешно удален!');
+                                $this.closest('tr').remove();
+                            } else {
+                                alertify.error('Что-то пошло не так и мы не смогли удалить этот заказ=(');
+                            }
+                        },
+                        error: function () {
+                            alertify.error('Что-то пошло не так и мы не смогли удалить этот заказ=(');
+                        }
+                    });
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

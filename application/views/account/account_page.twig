@@ -1,0 +1,79 @@
+{% extends 'template_view.twig' %}
+
+{% block content %}
+
+        <div class="account_address_delivery">
+            <div class="contacts_title">Ваши данные</div>
+            <form id="adres" method="post" action="/purchase">
+                <div class="account_address_form_field">
+                    <div class="text_input">
+                        <div class="text_input_wrap">
+                            <input type="text" name="email" id="email" placeholder="E-mail" class="address_input" maxlength="20"
+                                   value="{{ user.email }}" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <div class="account_address_form_field">
+                    <div class="text_input">
+                        <div class="text_input_wrap">
+                            <input type="text" name="firstname" id="firstname" placeholder="Имя" class="address_input"
+                                   maxlength="20" value="{{ user.name }}">
+                        </div>
+                    </div>
+                    <div class="account_address_require_star"></div>
+                </div>
+                <div class="account_address_form_field">
+                    <div class="text_input">
+                        <div class="text_input_wrap">
+                            <input type="text" name="lastname" id="lastname" placeholder="Фамилия" class="address_input"
+                                   maxlength="30" value="{{ user.lastname }}">
+                        </div>
+                    </div>
+                    <div class="account_address_require_star"></div>
+                </div>
+                <div class="account_address_form_field">
+                    <textarea class="delivery_address" name="address" id="address"
+                              placeholder="Адрес доставки">{{ user.address }}</textarea>
+
+                    <div class="account_address_require_star"></div>
+                </div>
+
+                <div class="account_summary_underline"></div>
+                <div class="account_address_submit">
+                    <button type="submit" title="Сохранить изменения" class="account_address_submit_btn">
+                        СОХРАНИТЬ
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="shopping_history">
+            <div class="contacts_title">История покупок</div>
+            <table class="shopping_history_table">
+                <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>
+                        <p class="shopping_history_order_id">Номер заказа: {{ order.id }}</p>
+                        <p>Сумма заказа: {{ order.total_sum|number_format(2, '.', '') }} руб.</p>
+                        <p>Дата заказа: {{ order.date_orderdate|date("m/d/Y", "Europe/Moscow") }}</p>
+
+                    </td>
+                    <td class="shopping_history_comp_order">{% for comp_order in order.comp_order %}
+                            <div class="category_full_wrap">
+                            <img id="shopping_history_img" src="/img/content/{{ comp_order.product.img }}"
+                                 alt="{{ comp_order.product.title }}"
+                                 width="304" height="236"/>
+                            {{ comp_order.product.title }}
+                                <div class="shopping_history_count">{{ comp_order.count }} шт.</div>
+                            </div>
+                        {% endfor %}
+                    </td>
+                </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+{% endblock %}

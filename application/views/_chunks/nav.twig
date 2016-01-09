@@ -1,0 +1,81 @@
+<section class="nav_wrap">
+    <nav>
+        <ul>
+            <li>
+                <a href="/about" class="nav_link_wrap">
+                    <div class="nav_link_triangle">
+                        <div class="nav_link_outer">
+                            <div class="nav_link_inner">
+                                <span>О компании</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/products" class="nav_link_wrap">
+                    <div class="nav_link_triangle">
+                        <div class="nav_link_outer">
+                            <div class="nav_link_inner">
+                                <span>Каталог</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/payments" class="nav_link_wrap">
+                    <div class="nav_link_triangle">
+                        <div class="nav_link_outer">
+                            <div class="nav_link_inner">
+                                <span>Способы оплаты</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/contacts/" class="nav_link_wrap">
+                    <div class="nav_link_triangle">
+                        <div class="nav_link_outer">
+                            <div class="nav_link_inner">
+                                <span>Контакты</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li id="nav_link_quit_hover">
+                {% if login  %}
+                    <a href="/account/" class="nav_link_wrap">
+                {% else  %}
+                    <a href="/login/" class="nav_link_wrap">
+                {% endif %}
+                    <div class="nav_link_triangle">
+                        <div class="nav_link_outer">
+                            <div class="nav_link_inner">
+                                <span>
+                                    {% if login  %}
+                                        {{ login }}
+                                    {% else  %}
+                                        Войти
+                                    {% endif %}
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% if login  %}
+                     <div class="nav_link_quit logout__link"><a href="/logout/">Выйти</a></div>
+                {% endif %}
+            </li>
+        </ul>
+        <div class="search">
+            <form action="/search" method="post">
+                <input class="search__input" type="text" placeholder="Поиск" name="name">
+                <input class="search_submit" type="submit" value="">
+            </form>
+        </div>
+    </nav>
+</section>

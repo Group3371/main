@@ -1,0 +1,114 @@
+{% extends 'template_view.twig' %}
+
+{% block styles %}
+    <style>
+
+        .feedback_waiting {
+            margin-bottom: 5px;
+            color: #d4d651;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="content_area_left" style="margin-bottom: 40px;">
+                              <section class="h1">Контакты</section>
+                              <section class="address">
+                                <div class="contacts_title">Наш адрес</div>
+                                <div class="address_direction">
+                                    <span>346720, Ростовская область, г. Аксай , ул. Промышленная №10.</span>
+                                    <span>Телефоны: (8-86350) 5-20-10, 5-54-71, 5-50-12</span>
+                                </div>
+                                <div class="address_map">
+                                    <div id="ymaps-map-id_136360048834677272460" style="width: 647px; height: 326px;"></div>
+                                    <script type="text/javascript">function fid_136360048834677272460(ymaps) {var map = new ymaps.Map("ymaps-map-id_136360048834677272460", {center: [39.852977256591814, 47.28125410574537], zoom: 14, type: "yandex#map"});map.controls.add("zoomControl").add("mapTools").add(new ymaps.control.TypeSelector(["yandex#map", "yandex#satellite", "yandex#hybrid", "yandex#publicMap"]));};</script>
+                                    <script type="text/javascript" src="http://api-maps.yandex.ru/2.0-stable/?lang=ru-RU&coordorder=longlat&load=package.full&wizard=constructor&onload=fid_136360048834677272460"></script>
+                                    <div class="addres_lt"></div>
+                                    <div class="addres_rt"></div>
+                                    <div class="addres_lb"></div>
+                                    <div class="addres_rb"></div>
+                                    <div class="addres_left"></div>
+                                    <div class="addres_right"></div>
+                                    <div class="addres_top"></div>
+                                    <div class="addres_bottom"></div>
+                                </div>
+                               </section>
+                               <section class="managers">
+
+                                <div class="contacts_title">Региональные менеджеры</div>
+                                <ul class="managers_list">
+                                    {% for manager in managers %}
+                                        <li>
+                                            <div class="mangers_pic">
+                                                <div class="managers_pic_wrap">
+                                                    <img src="/img/content/{{ manager['img'] }}" alt="">
+                                                </div>
+                                                <div class="managers_pic_frame"></div>
+                                            </div>
+                                            <div class="managers_title">
+                                                <div class="managers_title_name">{{ manager['name'] }}</div>
+                                                <div class="managers_title_surname">{{ manager['surname'] }} </div>
+                                                <div class="managers_title_state">{{ manager['city'] }}</div>
+                                            </div>
+                                            <ul class="managers_contacts">
+                                                <li>
+                                                    <div class="managers_contacts_phone">
+                                                        Тел.: <span>{{ manager['phone'] }}</span>
+                                                    </div>
+
+                                                    <div class="managers_contacts_icq">
+                                                        Email: <span><a href="mailto:{{ manager['email'] }}">{{ manager['email'] }}</a></span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </section>
+                                {% include 'contacts/contact_form.twig' %}
+                        </div>
+{% endblock %}
+
+{% if config %}
+    {% block scripts %}
+        <script type="text/javascript" src="{{ config.captcha.google_recaptcha_script_url }}"></script>
+        <script>
+            $(document).ready(function() {
+
+                /* Проверка формы обратной связи */
+                $('.feedback > form').on('submit', function(e) {
+
+                    e.preventDefault();
+
+                    var data = $(this).serialize();
+
+                    $.ajax({
+                        url: '/contacts/',
+                        type: 'post',
+                        data: data,
+                        dataType: 'json',
+                        beforeSend: function() {
+                            $(".feedback .feedback_waiting").html('Подождите, сообщение отправляется...');
+                        },
+                        success: function(data){
+                            if (data.msg == 'success') {
+                                $('.features').empty().text("Письмо успешно отправлено администрации сайта!");
+
+                            } else {
+                                $(".feedback .feedback_error").html(data.msg);
+                                $(".feedback .feedback_waiting").html('');
+                            }
+                        },
+                        error: function(data) {
+                            console.log(data);
+                            $(".feedback .feedback_waiting").html('');
+                            $(".feedback .feedback_error").html('Произошла какая-то ошибка!');
+                        }
+                    });
+                });
+
+            });
+        </script>
+    {% endblock %}
+{% endif %}

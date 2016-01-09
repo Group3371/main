@@ -1,0 +1,20 @@
+{
+  "name": "dz3",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Antoshka007/php_dz5",
+  "authors": [
+    "qwelp"
+  ],
+  "description": "dz3 php курс",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}

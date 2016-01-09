@@ -1,0 +1,26 @@
+{
+    "name": "vendor_name/package_name",
+    "description": "description_text",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "author's name",
+            "email": "email@example.com"
+        }
+    ],
+    "config": {
+        "vendor-dir": "libs"
+    },
+    "require": {
+        "klein/klein": "v2.1.0",
+        "twig/twig": "1.6.5",
+        "j4mie/idiorm": "v1.5.1",
+        "phpmailer/phpmailer": "v5.2.12"
+    },
+    "autoload": {
+        "classmap": [
+            "application"
+        ]
+    }
+}

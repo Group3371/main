@@ -1,0 +1,161 @@
+{% extends 'template_admin.twig' %}
+
+{% block styles %}
+    <style>
+        .admin__products-count {
+            width: 170px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .upload__products-file {
+            display: none !important;
+        }
+
+        .download__products-title {
+            margin-bottom: 30px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <h2 class="text-center">Выгрузка товаров</h2>
+
+        <h4>Настройки</h4>
+
+        <form class="admin__products-download" action="/admin/create_file" method="post">
+            <select class="admin__products-category" name="category">
+                <option value="0">Все категории</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.title }}</option>
+                {% endfor %}
+            </select>
+
+            <select class="admin__products-producer" name="producer">
+                <option value="0">Все производители</option>
+                {% for producer in producers %}
+                    <option value="{{ producer.id }}">{{ producer.title }}</option>
+                {% endfor %}
+            </select>
+
+            <select class="admin__products-format" name="format">
+                <option value="json">JSON</option>
+                <option value="xml">XML</option>
+                <option value="pdf">PDF</option>
+            </select>
+
+            <div class="input-group admin__products-count">
+                <span class="input-group-addon" id="basic-addon1">Количество</span>
+                <input type="number" class="form-control " name="count" placeholder="Все" aria-describedby="basic-addon1">
+            </div>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-default">Получить</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <h2 class="text-center download__products-title">Загрузка товаров</h2>
+        <form action="#" name="upload_products" class="admin__products-upload" enctype="multipart/form-data">
+            <div class="btn-group">
+                <button type="file" class="btn btn-default upload__products-button">Выбрать файл</button>
+            </div>
+            <input type="file" name="file" class="upload__products-file"/><br/><br/>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+
+            // Делаем активной текущую страницу в навигации
+            $('.admin__link-products').addClass('active');
+
+            $('.admin__products-category').selectBoxIt();
+            $('.admin__products-producer').selectBoxIt();
+            $('.admin__products-format').selectBoxIt();
+
+            $('.admin__products-download').on('submit', function(e) {
+                e.preventDefault();
+
+                var data = $(this).serialize();
+
+                $.ajax({
+                    url: '/admin/create_file',
+                    type: 'post',
+                    data: data,
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            window.location.href = '/download/' + data.filepath;
+                        } else {
+                            alertify.error(data.message);
+                        }
+                    },
+                    error: function(data) {
+                        alertify.error('Произошла какая-то ошибка!');
+                        console.log(data);
+                    }
+                });
+            });
+
+            $('.upload__products-button').on('click', function(e) {
+                e.preventDefault();
+
+                $('.upload__products-file').trigger('click');
+            });
+
+            $('.upload__products-file').fileupload({
+                url: '/admin/upload_products',
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 'success') {
+                        for (var i = 0; i < data.results.length; i++) {
+                            if (data.results[i].status == 'success') {
+                                alertify.success(data.results[i].message);
+                            } else {
+                                alertify.error(data.results[i].message);
+                            }
+                        }
+                    } else {
+                        alertify.error(data.message);
+                    }
+                },
+                error: function() {
+                    alertify.error('Что-то пошло не так=(');
+                }
+            });
+
+            $('.admin__products-upload').on('submit', function(e) {
+                e.preventDefault();
+
+                var data = $(this).serialize();
+
+                $.ajax({
+                    url: '/admin/upload_products',
+                    type: 'post',
+                    data: data,
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            alertify.success('Товары успешно добавлены!');
+                        } else {
+                            alertify.error(data.message);
+                        }
+                    },
+                    error: function(data) {
+                        alertify.error('Произошла какая-то ошибка!');
+                        console.log(data);
+                    }
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

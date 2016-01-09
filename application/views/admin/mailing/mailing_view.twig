@@ -1,0 +1,165 @@
+{% extends 'template_admin.twig' %}
+
+{% block styles %}
+    <style type="text/css">
+        .delivery__form {
+            width: 500px;
+            display: inline-block;
+        }
+
+        .delivery__form-body {
+            resize: vertical;
+        }
+        
+        .delivery__preview {
+            width: 615px;
+            float: right;
+            border: 3px solid rgba(0, 0, 0, 0.33);
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <section class="delivery">
+
+        <form class="delivery__form">
+
+            <div class="form-group">
+                <label for="subject">Тема письма</label>
+                <input type="text" class="delivery__form-subject form-control" name="subject" id="subject" placeholder="Тема письма" required>
+            </div>
+
+            <div class="form-group">
+                <label for="title">Заголовок содержания</label>
+                <input type="text" class="delivery__form-title form-control" name="title" id="title" placeholder="Заголовок" required>
+            </div>
+
+            <div class="form-group">
+                <label for="body">Содержание</label>
+                <textarea class="delivery__form-body form-control" name="body" id="body" placeholder="Содержание" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="group" checked value="0">Все
+                    </label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="group" value="2">Только администраторы</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="group" value="1">Только пользователи</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-default">Отправить</button>
+            <button class="btn btn-default button__preview">Показать превью</button>
+        </form>
+
+        <div class="delivery__preview"></div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+
+            // Делаем активной текущую страницу в навигации
+            $('.admin__link-mailing').addClass('active');
+
+            var
+                    preview = $('.delivery__preview'),
+                    loaded = false,
+                    subject = $('input.delivery__form-subject'),
+                    title = $('input.delivery__form-title'),
+                    body = $('.delivery__form-body'),
+                    radioButtons = $('.radio input'),
+                    submitButton = $('button[type="submit"]'),
+                    previewButton = $('.button__preview');
+
+            // Кнопка "Показать превью"
+            previewButton.on('click', function(e) {
+                e.preventDefault();
+
+                if (!loaded) {
+                    preview.load('/application/views/admin/mailing/letter_template.twig .main_table', {}, function() {
+
+                        preview.find('.letter__body h3').text(title.val());
+                        preview.find('.letter__body p').text(body.val());
+                        preview.find('.letter__body span').text('Иван');
+
+                        preview.css({
+                            'display': 'block'
+                        });
+                    });
+                    loaded = true;
+                } else {
+                    preview.find('.letter__body h3').text(title.val());
+                    preview.find('.letter__body p').text(body.val());
+                }
+            });
+
+            // Отправка
+            $('.delivery__form').on('submit', function(e) {
+                e.preventDefault();
+
+                var data = $(this).serialize();
+
+                alertify.confirm('Вы уверены, что хотите отправить письмо?', function() {
+
+
+                    $.ajax({
+                        url: '/admin/mailing',
+                        type: 'post',
+                        data: data,
+                        beforeSend: function() {
+                            submitButton.text('Подождите, сообщения отправляются!');
+
+                            subject.prop('readonly', true);
+                            title.prop('readonly', true);
+                            body.prop('readonly', true);
+                            radioButtons.prop('disabled', true);
+                            submitButton.prop('disabled', true);
+                            previewButton.prop('disabled', true);
+                        },
+                        success: function(data) {
+                            // TODO: в маршрутизаторе возникает исключение, поэтому пока отлавить ошибку не получается
+                            alertify.success('Сообщения успешно отправлены!');
+
+                            preview.css('display', 'none');
+                            loaded = false;
+                            subject.val('');
+                            title.val('');
+                            body.val('');
+
+                            subject.prop('readonly', false);
+                            title.prop('readonly', false);
+                            body.prop('readonly', false);
+                            radioButtons.prop('disabled', false);
+                            submitButton.prop('disabled', false);
+                            previewButton.prop('disabled', false);
+
+                            submitButton.text('Отправить');
+
+                        },
+                        error: function() {
+                            alertify.error('Что-то пошло не так=(');
+
+                            subject.prop('readonly', false);
+                            title.prop('readonly', false);
+                            body.prop('readonly', false);
+                            radioButtons.prop('disabled', false);
+                            submitButton.prop('disabled', false);
+                            previewButton.prop('disabled', false);
+
+                            submitButton.text('Отправить');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}

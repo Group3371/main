@@ -1,0 +1,81 @@
+{% extends 'template_admin.twig' %}
+
+{% block content %}
+
+    <div class="table-responsive">
+        <p>
+            <a href="/register/" class="btn btn-primary pull-right">Добавить пользователя</a>
+        </p>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Ф.И.О</th>
+                <th>Email</th>
+                <th>Активность</th>
+                <th>Дата рождения</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{% if user.is_active == 1%}Да{% else %}Нет{% endif %}</td>
+                    <td>{{ user.birthday }}</td>
+                    <td><a href="/admin/user_update/{{ user.id }}">Изменить</a></td>
+                    <td><a class="js-user__delete" href="#" data-id="{{ user.id }}">Удалить</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+
+            // Делаем активной текущую страницу в навигации
+            $('.admin__link-users').addClass('active');
+
+            $('.js-user__delete').on('click', function(e) {
+                e.preventDefault();
+
+                var
+                    $this = $(this),
+                    data = {
+                        id: $this.data('id')
+                    };
+
+                alertify.confirm('Вы уверены, что хотите удалить этого пользователя?', function() {
+
+                    $.ajax({
+                        url: '/admin/user_delete/',
+                        type: 'post',
+                        data: data,
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data == true) {
+                                alertify.success('Пользователь успешно удален!');
+                                $this.closest('tr').remove();
+                            } else {
+                                alertify.error('Что-то пошло не так и мы не смогли удалить этого пользователя=(');
+                            }
+                        },
+                        error: function() {
+                            alertify.error('Что-то пошло не так и мы не смогли удалить этого пользователя=(');
+                        }
+                    });
+
+                });
+
+            });
+
+        });
+    </script>
+{% endblock %}

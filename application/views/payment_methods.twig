@@ -1,0 +1,35 @@
+{% extends 'template_view.twig' %}
+
+{% block content %}
+
+    <section class="payments">
+        <h1 class="payments__title">Способы оплаты</h1>
+
+        <ul class="payments__list">
+            <li class="payments__item">
+                <h2 class="payments__item-title">Наличный расчет</h2>
+                <div class="payments__item-description">
+                    Вы можете оплатить наличными, как курьеру, если выберите доставку на дом, так и
+                    в отделении нашего магазина по адресу пр. Большевиков д. 7, если решить забрать товар
+                    сами.
+                </div>
+            </li>
+            <li class="payments__item">
+                <h2 class="payments__item-title">Расчет банковской картой</h2>
+                <div class="payments__item-description">
+                    Вы можете оплатить свои покупки с помощью банковских карт <span class="payments__selection">Visa</span> и <span class="payments__selection">MasterCard</span> как дома,
+                    так и у в нашем отделении.
+                </div>
+            </li>
+            <li class="payments__item">
+                <h2 class="payments__item-title">Электронные деньги</h2>
+                <div class="payments__item-description">
+                    Также мы предоставляем нашим клиентам возможность оплатить свои покупками сбережениями электронных
+                    кошельков <span class="payments__selection">Яндекс.Деньги</span>, <span class="payments__selection">WebMoney</span> и <span class="payments__selection">QIWI VISA Wallet</span>.
+                </div>
+            </li>
+        </ul>
+    </section>
+
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'template_view.twig' %}
+
+{% block content %}
+    {% if incart %}
+        <div class="cart">
+            <table class="cart_table">
+                <thead>
+                <td>Наименование товара</td>
+                <td>Цена</td>
+                <td>Количество</td>
+                <td>Сумма</td>
+                </thead>
+                {% for cartelement in incart %}
+                    <tr>
+                        <td>
+                            <div class="category_full_wrap">
+                                <img src="/img/content/{{ cartelement.image }}" alt=""/>
+                                {{ cartelement.title }}<br/>
+                            </div>
+                            <form method="post" action="/cart/remove">
+                                <input class="cart_update_id" type="hidden" name="remove_product_id"
+                                       value="{{ cartelement.id }}">
+                                <input type="hidden" name="remove" value="remove">
+                                <button type="submit" class="cart_delete_btn"></button>
+                            </form>
+                        </td>
+                        <td width="110">{{ cartelement.price }} руб.</td>
+                        <td width="190">
+                            <div class="cart_input_wrap">
+                                <form method="post" action="/cart/update">
+                                    <div class="text_input">
+                                        <div class="text_input_wrap">
+                                            <input class="cart_count_input" type="number" name="newcount" min="1"
+                                                   value="{{ cartelement.quantity }}"/>
+                                        </div>
+                                        <input type="hidden" name="update_product_id" value="{{ cartelement.id }}">
+                                        <input type="hidden" name="update" value="update">
+                                        <button type="submit" class="cart_order_recounter">Пересчитать</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </td>
+                        <td id="cart_item_subtotal" width="110">{{ cartelement.subtotal }} руб.</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2">Итого:</td>
+                    <td class="cart_total_counters">{{ total_amount }}</td>
+                    <td class="cart_total_price">{{ total_price }} руб.</td>
+                </tr>
+            </table>
+        </div>
+        <div class="cart_order">
+            <button type="button" title="ОформитьЗаказ" class="cart_order_submit">
+                <a class="cart_order_submit_link" href="/order">Оформить заказ</a>
+            </button>
+        </div>
+    {% else %}
+        В вашей корзине нет товаров
+    {% endif %}
+{% endblock %}
+
+
+
+
+
+
+

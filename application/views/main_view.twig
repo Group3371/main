@@ -1,0 +1,48 @@
+{% extends 'template_view.twig' %}
+
+{% block slideshow %}
+    {% include '_chunks/slideshow.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div class="features_descript">
+        <div class="feautures_descr_title">
+            <div>Почему</div>
+            <div>нас выбирают клиенты</div>
+        </div>
+        <div class="features_list_wrap">
+            <ul class="features_descr_list">
+                <li>
+                    <a href="/products/">Высокое качество</a> компьютерной техники по доступной цене
+                </li>
+                <li>
+                    <a href="/products/">Регулярное обновление</a> и широкий ассортимент товаров известных брендов
+                </li>
+                <li>
+                    Самые удобные и современные <a href="/payments/">способы оплаты</a> покупок
+                </li>
+                <li>
+                    Возможность работы по <a href="/contacts/">предварительному заказу</a>
+                </li>
+                <li>
+                    <a href="/products/">Удобство выбора</a> и отгрузки товара - офис, магазин, склад и сервисный центр располагаются на одной территории
+                </li>
+                <li>
+                    Если вы предпочитаете делать покупки онлайн, экономя время и средства, к вашим услугам наш интернет-магазин.
+                </li>
+            </ul>
+        </div>
+    </div>
+    <section class="features_sale">
+        <div class="feautures_sale_product">
+            <img src="/img/content/ASUSZenPadC7.08GbZ170C-1A013A.png" alt="Картинка">
+        </div>
+        <div class="feautures_sale_mask"></div>
+        <div class="feautures_sale_stripe"></div>
+    </section>
+{% endblock %}
+
+
+{% block carousel %}
+    {% include '_chunks/carousel.twig' %}
+{% endblock %}

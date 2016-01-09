@@ -1,0 +1,17 @@
+<section class="carousel">
+    <div class="carousel_wrap">
+        <ul>
+            {% for product in carousel_products %}
+            <li>
+                <a href="/product/{{ product.id }}" class="carousel_img_wrap">
+                    <img src="/img/content/{{ product.img }}" alt="{{ product.title }}"/>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="carousel_controls">
+        <a href="#" class="carousel_control_left"></a>
+        <a href="#" class="carousel_control_right"></a>
+    </div>
+</section>

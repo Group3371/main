@@ -1,0 +1,230 @@
+{% extends 'template_admin.twig' %}
+
+{% block styles %}
+    <style>
+        .user__groups--title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .user_group {
+            font-size: 14px;
+        }
+
+        .user__groups-add {
+            padding-bottom: 4px;
+            padding-top: 5px;
+        }
+
+        .user_group-remove {
+            display: inline-block;
+            vertical-align: top;
+            margin-left: 5px;
+            color: red;
+        }
+
+        .user_group-remove:hover {
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <form method="post" action="/admin/user_update/" class="update__user-form">
+        <div>
+            <div class="col-md-12">
+                <div class="form-area">
+                    <form role="form">
+                        <br style="clear:both">
+                        <div class="form-group user_id" data-id="{{ user.id }}">
+                            ID: {{ user.id }}
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Имя" value="{{ user.name }}" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Фамилия" value="{{ user.lastname }}">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="{{ user.email }}" required>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="date" min="1920-01-01" max="2010-01-01" id="birthday" name="birthday" placeholder="День рождения" value="{{ user.birthday }}">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="address" name="address" placeholder="Адрес" value="{{ user.address }}">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Пароль">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password_two" name="password_two" placeholder="Повторить пароль">
+                        </div>
+
+                        <div class="form-group">
+                            <div class="user__groups--title">Группы:</div>
+                            <ul class="user__groups">
+                                {% for user_group in user_groups %}
+                                    <li class="user_group" data-group="{{ user_group.id }}">
+                                        <span class="title">{{ user_group.title }}</span>
+                                        <a class="user_group-remove" href="#">x</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+                            <div class="new_group" {% if not other_groups %} style="display: none" {% endif %}>
+                                    <select class="groups__select">
+                                        {% for other_group in other_groups %}
+                                            <option value="{{ other_group.id }}">{{ other_group.title }}</option>
+                                        {% endfor %}
+                                    </select>
+                                <button type="button" class="user__groups-add btn btn-default">Добавить в группу</button>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="is_active" {% if user.is_active == 1 %}checked="checked"{% endif %}>
+                                    Активность
+                                </label>
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" value="{{ user.id }}">
+                        <input type="submit" name="submit" class="btn btn-primary pull-right" value="Сохранить">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+
+            // Делаем активной текущую страницу в навигации
+            $('.admin__link-users').addClass('active');
+
+            $('.groups__select').selectBoxIt();
+
+            // Добавление новой группы пользователю
+            $('.user__groups-add').on('click', function(e) {
+                var
+                    selectBox = $('.groups__select'),
+                    groupList = $('.user__groups'),
+                    id_group = selectBox.val(),
+                    indexSelected = selectBox.find('option[value=' + id_group + ']').index(),
+                    titleSelected = selectBox.find('option[value=' + id_group + ']').text(),
+                    id_user  = $('.user_id').data('id'),
+                    requestStr = 'id_user=' + id_user + '&id_group=' + id_group;
+
+                $.ajax({
+                    url: '/admin/user_update/add_group',
+                    type: 'post',
+                    data: requestStr,
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            alertify.success(data.message);
+
+                            // Добавляем группу в список групп пользователя
+                            var item  = '<li class="user_group" data-group="'+ id_group +'"><span class="title">'+ titleSelected +'</span><a class="user_group-remove" href="#">x</a></li>';
+                            groupList.append(item);
+
+                            // Удаляем группу из списка групп, которые можно добавить
+                            selectBox.data("selectBox-selectBoxIt").remove(indexSelected);
+
+                            // Если пользователь состоит во всех группах
+                            if (selectBox.find('option').length == 0) {
+                                $('.new_group').css('display', 'none');
+                            }
+                        } else {
+                            alertify.error(data.message);
+                        }
+                    },
+                    error: function() {
+                        alertify.error('Что-то пошло не так=(');
+                    }
+                });
+            });
+
+            // Удаление пользователя из группы
+            $('.user__groups').on('click', '.user_group-remove', function(e) {
+                e.preventDefault();
+
+                var $this = $(this);
+
+                alertify.confirm('Вы уверены, что хотите удалить пользователя из этой группы?', function() {
+
+                    var
+                            selectBox = $('.groups__select'),
+                            item = $this.closest('li'),
+                            id_user = $('.user_id').data('id'),
+                            id_group = item.data('group'),
+                            text_group = item.find('.title').text(),
+                            requestStr = 'id_user=' + id_user + '&id_group=' + id_group;
+
+                    $.ajax({
+                        url: '/admin/user_update/remove_group',
+                        type: 'post',
+                        data: requestStr,
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data.status == 'success') {
+                                alertify.success(data.message);
+
+                                // Удаляем группу из списка групп пользователя
+                                item.remove();
+
+                                // Добовляем группу в селект
+                                selectBox.data("selectBox-selectBoxIt").add({
+                                    value: id_group,
+                                    text: text_group
+                                });
+
+                                // Если пользователь до этого состоял во всех группах
+                                $('.new_group').css('display', 'block');
+                            } else {
+                                alertify.error(data.message);
+                            }
+                        },
+                        error: function() {
+                            alertify.error('Что-то пошло не так=(');
+                        }
+                    });
+                });
+            });
+
+
+            $('.update__user-form').on('submit', function(e) {
+                e.preventDefault();
+
+                var data = $(this).serialize();
+
+                $.ajax({
+                    url: '/admin/user_update/',
+                    type: 'post',
+                    data: data,
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            alertify.success(data.messages[0]);
+                        } else {
+                            for (var i = 0; i < data.messages.length; i++) {
+                                alertify.error(data.messages[i]);
+                            }
+                        }
+                    },
+                    error: function() {
+                        alertify.error('Что-то пошло не так=(');
+                    }
+                });
+            });
+
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,254 @@
+#window1 {
+  width: 500px;
+  height: 380px;
+  margin: 50px auto;
+  display: none;
+  background: #fff;
+  z-index: 200;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 16px;
+}
+ 
+.close {
+  margin-left: 410px;
+  margin-top: 4px;
+  cursor: pointer;
+}
+
+.text {
+  text-align: center;
+  font-family: Candara;
+}
+   
+#poisk {
+  position:absolute;
+  margin: auto auto auto 270px;  
+}
+   
+#vhod {
+  position:absolute;
+  margin:20px 0 0 10px;
+}
+   
+#registration {
+  position:absolute;
+  margin:0 0 0 50px;
+}
+
+.text2 {
+  position:absolute;
+  margin: 130px 0 10px 0;  
+}
+   
+.ok {
+  position:absolute;
+  margin: 91px 0px 0px 182px;
+}
+
+.popup_content {
+  height: 400px;
+}
+
+.registration_button {
+  margin: 30px 0px 0px 60px;
+}
+
+.in {
+  margin: 30px 0px 0px 40px;
+}
+
+.poisk {
+  margin: -161px 0px 0px 280px;
+  position: absolute;
+}
+
+#vhod_button {
+  margin: 0px 0px 0px 0px;
+}
+
+table.table {
+	border: 1px rgb(27, 27, 27) solid;
+	width: 534px;
+	height: 210px;
+	border-spacing: 2px;
+}
+
+table.table th {
+	border: 1px rgb(27, 27, 27) solid;
+	background-color: rgba(0, 146, 243, 0.07);
+	height: 30px;
+}
+
+table.table td {
+	border: 1px rgb(27, 27, 27) solid;
+	height: 40px;
+}
+table.table tfoot td {
+	border: 1px rgb(27, 27, 27) solid;
+	background-color: rgba(0, 146, 243, 0.2);
+	height: 30px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  height:auto !important;
+  width: 100%;
+  height: 100%;
+  min-height:100%;
+}
+
+.maincontent {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.line {
+  border-top: 1px dashed #000; 
+}
+
+.header {
+  padding: 10px;
+}
+
+.header:before {
+  content: '';
+  display: table;
+}
+
+.header:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.logo {
+  float: left;
+  width: 280px;
+  height: 140px;
+}
+
+.logo img {
+  width: 280px;
+  height: 140px;
+}
+
+/* BEGIN menu */
+
+.menu {
+  float: right;
+  width: 700px;
+  line-height: 140px;
+}
+
+.menu__list {
+  list-style: none;
+  margin: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+.menu__list:before {
+  content: '';
+  display: table;
+}
+
+.menu__list:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+
+
+.menu__item {
+  float:left; 
+  font:bold 14px Arial;
+}
+            
+.menu a {
+  color:#666; 
+  display:block; 
+  height:40px; 
+  line-height:36px; 
+  padding:0px 10px 0px 10px; 
+  background:url("../img/background.png") repeat-x; 
+  text-decoration: none;
+}
+            
+.menu a:hover {
+  color: #000000; 
+  background: url("../img/hover.png") repeat-x;
+}
+
+.content {
+  padding: 30px 0;
+}
+/*Corinthia*/
+.content__title {
+  font-family: Corinthia; 
+  font-size:30px; 
+  margin: 0;
+  margin-bottom: 10px;
+  font-weight: normal;
+  text-align: center;
+  
+}
+
+.content__text {
+  font-family:Candara; 
+  font-size:20px; 
+  color: #808080;
+  text-align: center;
+}
+
+/*
+  Стили для пагинации
+*/
+
+.pagination {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.pagination__list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+.pagination__item {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.pagination__item.active a {
+  color: #EA690B;
+}
+
+.pagination__link {
+  font-size: 20px;
+}
+
+.vechi__img {
+  width: 150px;
+
+}
+
+.poisk {
+  position: relative;
+
+}
+
+
+
+  
+ 

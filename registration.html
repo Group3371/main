@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Бюро находок NEW</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/registration_style.css">
+        <link rel="shortcut icon" href="img/favicon.ico" />
+        <script type="text/javascript" src="/js/jquery-2.1.4.js"></script>
+    </head>
+    <body>
+      <div class="wrapper">
+        <div class="maincontent">
+            
+          <header class="header"> 
+            <div class="logo">
+              <a href="#"><img class="test" src="img/logo.gif" alt="Логотип"></a>
+            </div>
+
+            <div class="menu">
+              <ul class="menu__list" >
+                <li class="menu__item">
+                  <a href="#">Правила</a>
+                </li>
+                <li class="menu__item">
+                  <a href="#">Связь с нами</a>
+                </li>
+                <li class="menu__item">
+                  <a href="#">Благодарность</a>
+                </li>
+                <li class="menu__item">
+                  <a href="#">Благотворительность</a>
+                </li>
+                <li class="menu__item">
+                  <a href="#">Партнеры</a>
+                </li>
+              </ul> 
+
+            </div>
+          </header> 
+        </div>
+      </div>
+      <div class="form">
+        <div class="form1">
+            <form  method="POST" action="">
+                <p>Имя<br><input placeholder="Введите ваше имя" name="" type="text" value=""></p>
+                <!--<p>Фамилия<br><input placeholder="Введите вашу фамилию" name="" type="text" value=""></p>-->
+                <p>Номер телефона<br><input placeholder="Укажите свой номер телефона" name="" type="text" value=""></p>
+            </form>
+        </div>
+        <div class="form2">  
+            <form  method="POST" action="">
+                <p>E-mail<br><input placeholder="Укажите свой e-mail" name="" type="text" value=""></p>
+                <p>Пароль<br><input placeholder="Придумайте пароль" name="" type="text" value=""></p>
+                <p>Повторение пароля<br><input placeholder="Повторите пароль" name="" type="text" value=""></p>
+            </form>
+        </div>    
+      </div>
+      <div class="line"></div> 
+        <center><p class="ok"><input class="checkbox" type="checkbox" name="option1" value="a1">Я согласен на обработку моих личных данных</p></center>
+      <div class="line"></div>
+      
+        <center><button disabled>Регистрируемся и переходим в личный кабинет-></button></center>
+      
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $(".checkbox").on("change", function(e){
+        if (e.target.checked){
+          $(".button").prop("disabled", false);
+        }
+        else {
+          $(".button").prop("disabled", true);
+        }
+      });
+    });
+    </script>
+    </body>
+    
+</html>     
+
+            

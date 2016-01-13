@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Бюро находок NEW</title>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="favicon.ico" />
+        <link rel="stylesheet" type="text/css" href="css/popup.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+    <body>
+      <div class="wrapper">
+        <div class="maincontent">
+          <header class="header"> 
+            <div class="logo">
+              <a href="/"><img class="test" src="img/logo.gif" alt="Логотип"></a>
+            </div>
+            <div class="menu">
+              <ul class="menu__list" >
+                <li class="menu__item">
+                  <a href="pravila.html">Правила</a>
+                </li>
+                <li class="menu__item">
+                  <a href="svyaz.php">Связь с нами</a>
+                </li>
+                <li class="menu__item">
+                  <a href="blagodar.html">Благодарность</a>
+                </li>
+                <li class="menu__item">
+                  <a href="blagotvor.html">Благотворительность</a>
+                </li>
+                <li class="menu__item">
+                  <a href="partners.html">Партнеры</a>
+                </li>
+              </ul> 
+            </div>
+          </header> 
+          <div class="block">
+            <div class="block__find">    
+              <a class="button__find" href="#window"></a>
+            </div>
+          </div>
+          <div class="block__lost">
+            <a class="button__lost" href="pages.php"></a>
+          </div>        
+          <div class="line"></div>
+          <section class="content">
+            <h1 class="content__title">
+              На "Бюро находок" мы помогаем каждой вещи вернуться к себе домой
+            </h1>
+            <div class="content__text">
+              Оставаясь неравнодушными друг к другу, сможем сделать мир чуточку добрее
+            </div>
+          </section>   
+          <div class="line"></div>
+        </div>
+      </div> 
+     <!--задний фон-->
+      <div id="window">         
+        <div class="text"> 
+          <p>Добавить вещь!</p>
+        </div>
+        <form method="post" action="php/add.php" enctype="multipart/form-data" >
+          <div>
+            <div class="personal">
+              <p>E-mail<br><input name="email" placeholder="Укажите свой E-mail"  type="text" value=""></p>
+              <p>Телефон<br><input name="phone" placeholder="Укажите номер телефона"  type="text" value=""></p>
+              <p>Имя<br><input name="name" placeholder="Укажите своё имя"  type="text" value=""></p>
+            </div>
+            <p><input name="thing" type="radio" value="Находка"> Находка</p>
+            <p><input name="thing" type="radio" value="Потеря" checked> Потеря</p>
+            <input  name="img" type="file" accept="image/*">
+          </div>
+          <p>Название вещи<br><input name="title" placeholder="Введите краткое название"  type="text" value=""></p>
+          <p>Описание вещи<br><textarea name="desc" cols="60" rows="5"   placeholder="Введите описание вещи" ></textarea></p>
+          <center><p class="ok"><input name="option1" class="checkbox" type="checkbox"  value="a1">Я согласен на обработку моих личных данных</p>
+            <button class="button" disabled="" type="submit">Сохранить</button>
+          </center>
+        </form>
+          <!--<button>Регистрация</button>
+          </form>
+        </div>
+        <div class="in">
+          <form id="forma" method="POST" action="">
+            <p>Вход<br/>
+              <input placeholder="E-mail" name="" type="text" value="">
+            </p>
+          </form>
+          <p>
+          <input placeholder="Пароль" name="" type="text" value="">
+          <button id="vhod_button">Войти</button>
+          </p>
+          <a href="#">Не помню пароль</a>
+        </div>
+        <div>
+          <button class="poisk">Самостоятельный поиск</button>
+        </div>-->
+      </div>
+      <script src="js/jquery-2.1.4.js"></script>
+      <script type="text/javascript" src="js/jquery.popup.min.js"></script>
+      <script type="text/javascript">
+         $(document).ready(function() {
+            $('.button__find').popup({
+              'width': 500
+            });
+         });
+      </script> 
+      <script type="text/javascript">
+        $(document).ready(function(){
+          $(".checkbox").on("change", function(e){
+            if (e.target.checked){
+              $(".button").prop("disabled", false);
+            }
+            else {
+              $(".button").prop("disabled", true);
+            }
+          });
+        });
+      </script>     
+  </body>
+</html>
